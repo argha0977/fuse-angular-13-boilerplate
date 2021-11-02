@@ -10,6 +10,16 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
+## Generate Page
+
+Run `ng generate module modules/module-name` to generate a new module. Then run `ng generate component modules/component-name` to generate a new component. 
+
+Then add route in the newly created module and import necessary modules.
+
+Add route to the app-routing.ts file.
+
+Add the page to menu in app/mock-api/common/navigation/data.ts file
+
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.

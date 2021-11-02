@@ -31,6 +31,22 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 link: '/docs/guides'
             }
         ]
+    },
+    {
+        id: 'settings',
+        title: 'Settings',
+        subtitle: 'Settings',
+        type: 'group',
+        icon: 'heroicons_outline:home',
+        children: [
+            {
+                id: 'settings.users',
+                title: 'Users',
+                type: 'basic',
+                icon: 'heroicons_outline:clipboard-check',
+                link: '/users'
+            }
+        ]
     }
 ];
 export const compactNavigation: FuseNavigationItem[] = [

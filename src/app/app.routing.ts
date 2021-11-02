@@ -64,6 +64,17 @@ export const appRoutes: Route[] = [
         ]
     },
 
+    // Users routes
+    {
+        path: '',
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
+        component: LayoutComponent,
+        children: [
+            { path: 'users', loadChildren: () => import('app/modules/users/users.module').then(m => m.UsersModule) },
+        ]
+    },
+
     // Admin routes
     {
         path       : '',

@@ -17,6 +17,154 @@ export class UserService {
     this.authorization = this.commonService.getAuthorization();
   }
 
+  create(user: any) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.authorization
+      })
+    };
+    return this.http.post(this.baseUrl + '/user/create', user, httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.errorHandler)
+      )
+  }
+
+  update(user: any) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.authorization
+      })
+    };
+    return this.http.post(this.baseUrl + '/user/update', user, httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.errorHandler)
+      )
+  }
+
+  delete(user: any) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.authorization
+      })
+    };
+    return this.http.post(this.baseUrl + '/user/delete', user, httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.errorHandler)
+      )
+  }
+
+  show(id: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.authorization
+      })
+    };
+    return this.http.get(this.baseUrl + '/user/show/' + id, httpOptions);
+  }
+
+  showUserOfOrganization(ocode: string, userid: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.authorization
+      })
+    };
+    return this.http.get(this.baseUrl + '/user/showUser/' + ocode + '/' + userid, httpOptions);
+  }
+
+  showUser(userid: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.authorization
+      })
+    };
+    return this.http.get(this.baseUrl + '/user/showUser/' + userid, httpOptions);
+  }
+
+  search(user: any) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.authorization
+      })
+    };
+    return this.http.post(this.baseUrl + '/user/search', user, httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.errorHandler)
+      )
+  }
+
+  count(user: any) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.authorization
+      })
+    };
+    return this.http.post(this.baseUrl + '/user/count', user, httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.errorHandler)
+      )
+  }
+
+  updatePassword(user: any) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.authorization
+      })
+    };
+    return this.http.post(this.baseUrl + '/user/updatePassword', user, httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.errorHandler)
+      )
+  }
+
+  resetPassword(user: any) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.authorization
+      })
+    };
+    return this.http.post(this.baseUrl + '/user/resetPassword', user, httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.errorHandler)
+      )
+  }
+
+  upload(file: FormData) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.authorization
+      })
+    };
+    return this.http.post(this.baseUrl + '/user/upload', file, httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.errorHandler)
+      )
+  }
+
+  profilePic(filePath: string) {
+    if (!filePath) {
+      filePath = 'nouser.png';
+    }
+    return this.baseUrl + '/user/profilePic/' + filePath;
+  }
+
   signin(user: any) {
     const httpOptions = {
       headers: new HttpHeaders({
