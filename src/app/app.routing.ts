@@ -65,7 +65,7 @@ export const appRoutes: Route[] = [
     },
 
     // Users routes
-    {
+    /* {
         path: '',
         canActivate: [AuthGuard],
         canActivateChild: [AuthGuard],
@@ -73,7 +73,7 @@ export const appRoutes: Route[] = [
         children: [
             { path: 'users', loadChildren: () => import('app/modules/users/users.module').then(m => m.UsersModule) },
         ]
-    },
+    }, */
 
     // Admin routes
     {
@@ -91,6 +91,14 @@ export const appRoutes: Route[] = [
                 {path: 'project', loadChildren: () => import('app/modules/admin/dashboards/project/project.module').then(m => m.ProjectModule)},
                 {path: 'analytics', loadChildren: () => import('app/modules/admin/dashboards/analytics/analytics.module').then(m => m.AnalyticsModule)},
             ]},
+
+            // Users routes
+            {
+                path: '',
+                children: [
+                    { path: 'users', loadChildren: () => import('app/modules/users/users.module').then(m => m.UsersModule) },
+                ]
+            },
 
             // Apps
             /* {path: 'apps', children: [

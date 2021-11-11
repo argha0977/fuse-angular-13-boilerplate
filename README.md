@@ -16,7 +16,7 @@ Run `ng generate module modules/module-name` to generate a new module. Then run 
 
 Then add route in the newly created module and import necessary modules.
 
-Add route to the app-routing.ts file.
+Add route to the app-routing.ts file in childern array of Admin routes.
 
 Add the page to menu in app/mock-api/common/navigation/data.ts file
 
