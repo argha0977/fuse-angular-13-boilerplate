@@ -1,0 +1,121 @@
+[
+    {
+        "name": "APPADMIN",
+        "privilege": [
+            "App Dashboard",
+            "Dashboard",
+            "Setting",
+            "View Organization",
+            "Edit Organization",
+            "View User",
+            "Edit User",
+            "Delete User",
+            "Edit Product",
+            "Delete Product",
+            "View SMS Log",
+            "View User Log",
+            "Delete Office",
+            "Edit Office",
+            "Delete Location",
+            "Edit Location",
+            "View Role",
+            "Edit Role",
+            "View Deal",
+            "Add Deal",
+            "Edit Deal",
+            "Delete Deal",
+            "View Attendance",
+            "Mark Attendance",
+            "Edit Attendance",
+            "Delete Attendance",
+            "Setting",
+            "View Location",
+            "Track Location"
+        ]
+    },
+    {
+        "name": "APPUSER",
+        "privilege": [
+            "App Dashboard",
+            "Dashboard",
+            "Setting",
+            "View Organization",
+            "Edit Organization",
+            "View User",
+            "Edit User",
+            "Edit Product",
+            "Delete Product",
+            "Delete User",
+            "View SMS Log",
+            "View User Log",
+            "View Role",
+            "Edit Role",
+            "View Deal",
+            "Add Deal",
+            "Edit Deal",
+            "Delete Deal",
+            "View Attendance",
+            "Mark Attendance",
+            "Edit Attendance",
+            "Delete Attendance",
+            "Setting",
+            "View Location",
+            "Track Location"
+        ]
+    },
+    {
+        "name": "ADMIN",
+        "privilege": [
+            "Dashboard",
+            "Setting",
+            "View Organization",
+            "Edit Organization",
+            "View User",
+            "Edit User",
+            "Delete User",
+            "View SMS Log",
+            "View User Log",
+            "View Role",
+            "Edit Role",
+            "Edit Product",
+            "Delete Product",
+            "View Deal",
+            "Add Deal",
+            "Edit Deal",
+            "Delete Deal",
+            "View Attendance",
+            "Mark Attendance",
+            "Edit Attendance",
+            "Delete Attendance",
+            "Setting",
+            "View Location",
+            "Track Location",
+            "Delete User",
+            "Edit User"
+        ]
+    },
+    {
+        "name": "USER",
+        "privilege": [
+            "Dashboard",
+            "Setting",
+            "View Organization",
+            "View User",
+            "View Deal",
+            "View Attendance",
+            "Mark Attendance"
+        ]
+    },
+    {
+        "name": "SALESMAN",
+        "privilege": [
+            "Dashboard",
+            "Setting",
+            "View Organization",
+            "View User",
+            "View Deal",
+            "View Attendance",
+            "Mark Attendance"
+        ]
+    }
+]

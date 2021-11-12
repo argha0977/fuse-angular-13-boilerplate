@@ -1,0 +1,19 @@
+[
+    {
+        "name":"Organization Settings",
+        "default": true
+    },
+    {
+        "name": "Deal Management",
+        "default": false
+    },
+    {
+        "name": "Attendance Management",
+        "default": false
+    },
+    {
+        "name": "Location Tracking",
+        "default": false
+    }
+    
+]

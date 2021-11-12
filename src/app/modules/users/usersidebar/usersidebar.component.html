@@ -1,0 +1,16 @@
+<div fxLayout="row" fxLayoutAlign="start center" > <h2 style="color:blue;font-weight:800;margin-bottom: 20px; margin-top:20px;margin-left:10px;">Filter User</h2> </div>
+<div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" style="margin-bottom: 20px; margin-top:20px;margin-left:10px;">     
+    <mat-form-field class="side-gap" appearance="outline" fxFlex="100">
+        <mat-label>Select Role</mat-label>
+        <mat-select [(ngModel)]="criteria.role">
+            <mat-option *ngFor="let role of roles" [value]="role.name">
+                {{role.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+<div fxLayout="column" fxLayoutAlign="end center" style="margin-bottom: 20px; margin-top:20px;margin-left:10px;">
+    <button mat-raised-button color="primary" (click)="onFilter()" class="submit-button" aria-label="Filter" >
+        Filter
+    </button>
+</div>

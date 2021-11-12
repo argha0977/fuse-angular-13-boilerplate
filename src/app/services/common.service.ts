@@ -2,6 +2,8 @@ import { Injectable, Inject } from '@angular/core';
 // import { MatSnackBar } from '@angular/material/snack-bar';
 import { SESSION_STORAGE, StorageService } from 'ngx-webstorage-service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Injectable({
@@ -21,7 +23,7 @@ export class CommonService {
   private jsonUrl = 'assets/jsons';
 
   constructor(
-    // public snakBar: MatSnackBar,
+     public snakBar: MatSnackBar,
     @Inject(SESSION_STORAGE) private storage: StorageService,
     public http: HttpClient
   ) { }
@@ -65,12 +67,12 @@ export class CommonService {
     return -1;
   }
 
-  /* showSnakBarMessage(message: string, type: string, duration: number, action?: string): void {
+   showSnakBarMessage(message: string, type: string, duration: number, action?: string): void {
     this.snakBar.open(message, action, {
       duration: duration,
       panelClass: type
     });
-  } */
+  } 
 
   /**
    * ***********************************************************************************
@@ -104,18 +106,18 @@ export class CommonService {
    */
 
   getDefaultRole(): any {
-    /* return this.http.get(this.jsonUrl + '/defaultroles.json')
-      .pipe(map((response: Response) => response)) */
+     return this.http.get(this.jsonUrl + '/defaultroles.json')
+      .pipe(map((response: Response) => response)) 
   }
 
   getPrivileges(): any {
-    /* return this.http.get(this.jsonUrl + '/privileges.json')
-      .pipe(map((response: Response) => response)) */
+     return this.http.get(this.jsonUrl + '/privileges.json')
+      .pipe(map((response: Response) => response)) 
   }
 
   getFeatures(): any {
-    /* return this.http.get(this.jsonUrl + '/features.json')
-      .pipe(map((response: Response) => response)) */
+   return this.http.get(this.jsonUrl + '/features.json')
+      .pipe(map((response: Response) => response)) 
   }
 
 /**

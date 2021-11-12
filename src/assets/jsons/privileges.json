@@ -1,0 +1,47 @@
+[
+    {
+        "feature": "Organization Settings",
+        "privilege": [
+            "App Dashboard",
+            "Dashboard",
+            "Setting",
+            "View Organization",
+            "Edit Organization",
+            "View User",
+            "Edit User",
+            "Delete User",
+            "View SMS Log",
+            "View User Log",
+            "View Role",
+            "Edit Role"
+        ]
+    },
+    {
+        "feature": "Deal Management",
+        "privilege": [
+            "View Deal",
+            "Add Deal",
+            "Edit Deal",
+            "Delete Deal",
+            "Edit Product",
+            "Delete Product"
+        ]
+    },
+    {
+        "feature": "Attendance Management",
+        "privilege": [
+            "View Attendance",
+            "Mark Attendance",
+            "Edit Attendance",
+            "Delete Attendance"
+        ]
+    },
+    {
+        "feature": "Location Tracking",
+        "privilege": [
+            "Setting",
+            "View Location",
+            "Track Location"
+        ]
+    }
+]
