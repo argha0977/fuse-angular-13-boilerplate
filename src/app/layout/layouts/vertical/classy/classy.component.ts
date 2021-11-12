@@ -7,7 +7,11 @@ import { FuseNavigationService, FuseVerticalNavigationComponent } from '@fuse/co
 import { Navigation } from 'app/core/navigation/navigation.types';
 import { NavigationService } from 'app/core/navigation/navigation.service';
 import { User } from 'app/core/user/user.types';
-import { UserService } from 'app/core/user/user.service';
+//import { UserService } from 'app/core/user/user.service';
+import { Store } from '@ngrx/store';
+import { CommonService } from 'app/services/common.service';
+import { signin } from 'app/store/actions/user.actions';
+import { UserService } from 'app/services/user.service';
 
 @Component({
     selector     : 'classy-layout',
@@ -18,7 +22,13 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
 {
     isScreenSmall: boolean;
     navigation: Navigation;
-    user: User;
+    //user: User;
+    user = {
+        firstname: '',
+        lastname: '',
+        imageUrl: '',
+        role: ''
+    };
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -28,9 +38,12 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
         private _activatedRoute: ActivatedRoute,
         private _router: Router,
         private _navigationService: NavigationService,
-        private _userService: UserService,
+        //private _userService: UserService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
-        private _fuseNavigationService: FuseNavigationService
+        private _fuseNavigationService: FuseNavigationService,
+        private store: Store<{ user: any }>,
+        private commonService: CommonService,
+        private userService: UserService
     )
     {
     }
@@ -64,11 +77,12 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
             });
 
         // Subscribe to the user service
-        this._userService.user$
+        /* this._userService.user$
             .pipe((takeUntil(this._unsubscribeAll)))
             .subscribe((user: User) => {
                 this.user = user;
-            });
+            }); */
+        this.getUserFromStore();
 
         // Subscribe to media changes
         this._fuseMediaWatcherService.onMediaChange$
@@ -94,6 +108,24 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
+    async getUserFromStore() {
+        this.store.select('user')
+        .subscribe( response =>{
+            
+            if (response.user) {
+                this.user = JSON.parse(JSON.stringify(response.user));
+                this.user.imageUrl = this.userService.profilePic(this.user['image']);
+            }
+            else this.getUserFromStorage();
+        })
+        
+    }
+
+    getUserFromStorage() {
+        let user = this.commonService.getItem('currentUser');
+        console.log(user);
+        if(user) this.store.dispatch(signin({user: user}));
+    }
     /**
      * Toggle navigation
      *
