@@ -1,16 +1,15 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { fuseAnimations } from '@fuse/animations';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { FuseConfirmationDialogComponent } from '@fuse/services/confirmation/dialog/dialog.component';
 import { Store } from '@ngrx/store';
-import { InventoryService } from 'app/modules/admin/apps/ecommerce/inventory/inventory.service';
-import { InventoryPagination, InventoryProduct } from 'app/modules/admin/apps/ecommerce/inventory/inventory.types';
 import { CommonService } from 'app/services/common.service';
 import { UserService } from 'app/services/user.service';
 import { signin } from 'app/store/actions/user.actions';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AdduserformComponent } from '../adduserform/adduserform.component';
 
@@ -33,15 +32,24 @@ export class UserlistComponent implements OnInit{
     image:''
 };
    userList=[];
+  configForm: FormGroup;
+
    dialogRef: any;
    confirmDialogRef: MatDialogRef<FuseConfirmationDialogComponent>;
   constructor(
-    private store: Store<{ user: any }>,  private commonService: CommonService, private userService: UserService,private _matDialog: MatDialog,)
+    private store: Store<{ user: any }>,  
+    private commonService: CommonService, 
+    private userService: UserService,
+    private _matDialog: MatDialog,
+    private _formBuilder: FormBuilder,
+    private _fuseConfirmationService: FuseConfirmationService
+    )
   {
   }
 
   ngOnInit(): void {
   this.getUserFromStore();
+  this.configureDeleteConfirmation();
   }
 
    ngOnDestroy(): void
@@ -67,6 +75,7 @@ export class UserlistComponent implements OnInit{
           if(response.users){
             let userList= JSON.parse(JSON.stringify(response.users));
             for(let i=0; i<userList.length;i++){
+              userList[i].imageUrl = this.userService.profilePic(userList[i].image);
               this.userList.push(userList[i]);
             }
             console.log(this.userList);
@@ -100,23 +109,48 @@ export class UserlistComponent implements OnInit{
       });
 
   }
+
+  configureDeleteConfirmation() {
+    // Build the config form
+    this.configForm = this._formBuilder.group({
+      title: 'Remove User',
+      message: 'Are you sure you want to remove this user permanently? <span class="font-medium">This action cannot be undone!</span>',
+      icon: this._formBuilder.group({
+        show: true,
+        name: 'heroicons_outline:exclamation',
+        color: 'warn'
+      }),
+      actions: this._formBuilder.group({
+        confirm: this._formBuilder.group({
+          show: true,
+          label: 'Remove',
+          color: 'warn'
+        }),
+        cancel: this._formBuilder.group({
+          show: true,
+          label: 'Cancel'
+        })
+      }),
+      dismissible: true
+    });
+  }
+
+  openConfirmationDialog(): void {
+    // Open the dialog and save the reference of it
+    const dialogRef = this._fuseConfirmationService.open(this.configForm.value);
+
+    // Subscribe to afterClosed from the dialog reference
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
+    });
+  }
+
   deleteUser(index:number ,list:any) :void {
-  if(list.userid != this.user['userid']) {
-    this.confirmDialogRef = this._matDialog.open(FuseConfirmationDialogComponent, {
-        disableClose: false
-    });
-
-    // this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-
-    this.confirmDialogRef.afterClosed().subscribe(result => {
-        if (result) {
-            // this.userDelete(list);
-        }
-        this.confirmDialogRef = null;
-    });
-}
-else {
-    this.commonService.showSnakBarMessage('You can\'t remove yourself', 'error', 2000);
-}
+    if (list.userid != this.user['userid']) {
+      this.openConfirmationDialog();
+    }
+    else {
+      this.commonService.showSnakBarMessage('You can\'t remove yourself', 'error', 2000);
+    }
   }
 }
