@@ -8,7 +8,7 @@ import { FuseConfirmationDialogComponent } from '@fuse/services/confirmation/dia
 import { Store } from '@ngrx/store';
 import { CommonService } from 'app/services/common.service';
 import { UserService } from 'app/services/user.service';
-import { signin } from 'app/store/actions/user.actions';
+import { deleteUser, signin } from 'app/store/actions/user.actions';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AdduserformComponent } from '../adduserform/adduserform.component';
@@ -73,6 +73,7 @@ export class UserlistComponent implements OnInit{
             this.getUserFromStorage();
           }
           if(response.users){
+            this.userList=[];
             let userList= JSON.parse(JSON.stringify(response.users));
             for(let i=0; i<userList.length;i++){
               userList[i].imageUrl = this.userService.profilePic(userList[i].image);
@@ -135,22 +136,36 @@ export class UserlistComponent implements OnInit{
     });
   }
 
-  openConfirmationDialog(): void {
+  openConfirmationDialog(list:any): void {
     // Open the dialog and save the reference of it
     const dialogRef = this._fuseConfirmationService.open(this.configForm.value);
 
     // Subscribe to afterClosed from the dialog reference
     dialogRef.afterClosed().subscribe((result) => {
       console.log(result);
+      if(result=="confirmed"){
+        this.userDelete(list)
+      }
     });
   }
 
   deleteUser(index:number ,list:any) :void {
     if (list.userid != this.user['userid']) {
-      this.openConfirmationDialog();
+      this.openConfirmationDialog(list);
     }
     else {
       this.commonService.showSnakBarMessage('You can\'t remove yourself', 'error', 2000);
     }
+  }
+  userDelete(list:any){
+    list.duserid = this.user['userid'];
+    this.userService.delete(list)
+        .pipe(takeUntil(this._unsubscribeAll))
+       .subscribe( response => {
+        this.store.dispatch(deleteUser({user: list}));
+       },
+       respError => {
+           this.commonService.showSnakBarMessage(respError, 'error', 2000);
+       })
   }
 }

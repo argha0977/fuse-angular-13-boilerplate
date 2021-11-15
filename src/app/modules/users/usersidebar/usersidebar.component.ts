@@ -15,7 +15,7 @@ export class UsersidebarComponent implements OnInit {
   user: any;
   roles = [];
   criteria={role:''};
-
+  userList=[];
   constructor(private commonService:CommonService, private userService:UserService,private store: Store<{ user: any }>,) 
   {  this._unsubscribeAll = new Subject();}
 
@@ -49,13 +49,19 @@ export class UsersidebarComponent implements OnInit {
         })
 }
 onFilter(){
+  this.userList=[];
   let criteria = JSON.parse(JSON.stringify(this.criteria));
   criteria.ocode = this.user.ocode;
   this.userService.search(criteria)
   .subscribe(response => {
       console.log(response)
-      let data= JSON.parse(JSON.stringify(response))
-      this.store.dispatch(setUsers({users: data}));
+      let data= JSON.parse(JSON.stringify(response));
+      if(data.length>0){
+        for(let i=0;i<data.length;i++){
+          this.userList.push(data[i]);
+        } 
+      }
+      this.store.dispatch(setUsers({users: this.userList}));
     },
     respError => {
         // this.loading = false;
