@@ -67,7 +67,6 @@ export class UsersComponent implements OnInit {
           //this._contactsService.updateContact(response.getRawValue());
         });
 
-
     }
 
 }
