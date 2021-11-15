@@ -12,7 +12,7 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Generate Page
 
-Run `ng generate module modules/module-name` to generate a new module. Then run `ng generate component modules/component-name` to generate a new component. 
+Run `ng generate module modules/module-name` to generate a new module. Then run `ng generate component modules/component-name --module module-name` to generate a new component. 
 
 Then add route in the newly created module and import necessary modules.
 
