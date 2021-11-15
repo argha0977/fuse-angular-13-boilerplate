@@ -3,9 +3,11 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
+import { Store } from '@ngrx/store';
 import { AuthService } from 'app/core/auth/auth.service';
 import { CommonService } from 'app/services/common.service';
 import { UserService } from 'app/services/user.service';
+import { signin } from 'app/store/actions/user.actions';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -36,7 +38,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy
      */
     constructor(
         private _activatedRoute: ActivatedRoute,
-        //private store: Store<AppState>,
+        private store: Store<{ user: any }>,
         private commonService: CommonService,
         private userService: UserService,
         private _formBuilder: FormBuilder,
@@ -56,8 +58,8 @@ export class AuthSignInComponent implements OnInit, OnDestroy
     ngOnInit(): void {
         // Create the form
         this.signInForm = this._formBuilder.group({
-            userid: ['hughes.brian@company.com', Validators.required],
-            password: ['admin', Validators.required],
+            userid: ['', Validators.required],
+            password: ['', Validators.required],
             rememberMe: ['']
         });
         /* this.signInForm = this._formBuilder.group({
@@ -99,6 +101,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((response) => {
                 this.commonService.setItem('currentUser', response);
+                this.store.dispatch(signin({user: response}));
                 // Set the redirect url.
                 // The '/signed-in-redirect' is a dummy url to catch the request and redirect the user
                 // to the correct page after a successful sign in. This way, that url can be set via

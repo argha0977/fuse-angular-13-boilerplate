@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { CommonService } from 'app/services/common.service';
 import { UserService } from 'app/services/user.service';
+import { setUsers } from 'app/store/actions/user.actions';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -14,7 +16,7 @@ export class UsersidebarComponent implements OnInit {
   roles = [];
   criteria={role:''};
 
-  constructor(private commonService:CommonService, private userService:UserService) 
+  constructor(private commonService:CommonService, private userService:UserService,private store: Store<{ user: any }>,) 
   {  this._unsubscribeAll = new Subject();}
 
   ngOnInit(): void {
@@ -52,6 +54,8 @@ onFilter(){
   this.userService.search(criteria)
   .subscribe(response => {
       console.log(response)
+      let data= JSON.parse(JSON.stringify(response))
+      this.store.dispatch(setUsers({users: data}));
     },
     respError => {
         // this.loading = false;

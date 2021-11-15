@@ -12,9 +12,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class CommonService {
 
   //private apiUrl = 'http://localhost:4006/api';//Local API
-  private apiUrl = 'http://ecollect.myaastha.in/clapehrapidev/api';//Dev API
+  private apiUrl = 'https://erp.sisx.in/vcrmapidev/api';//Dev API
   //private apiUrl = 'http://ecollect.myaastha.in/clapehrapidev/api';//Prod API
-  private authorization = 'Bearer aHJtZm9yQU1DOnlodGdrcmY1XiZLTQ==';
+  private authorization = 'Bearer c29mdG1lZXRzdmVuZG9yQ1JNOkoxNzFUU2U1VA==';
   //For Sign up Link
   private appUrl = 'http://ecollect.myaastha.in/hrmpoc/#/';
   private appUrlSms = 'http%3A%2F%2Fecollect.myaastha.in%2F%23%2F';

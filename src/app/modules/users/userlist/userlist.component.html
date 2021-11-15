@@ -1,7 +1,7 @@
 <!-- <div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent"> -->
   
-<div class="table-users">
-    <!-- <div class="header">Users</div> -->
+<div class="table-users" *ngIf="userList.length>0">
+    <div class="header"></div>
     
     <table cellspacing="0">
        <tr>
@@ -13,18 +13,21 @@
           <th width="60">Delete</th>
        </tr>
  
-       <tr>
-          <td><img src="https://i.picsum.photos/id/1005/100/100.jpg" alt="" /></td>
-          <td>Jane Doe</td>
-          <td>jane.doe@foo.com</td>
-          <td>01 800 2000</td>
-          <td><mat-icon svgIcon="edit"></mat-icon></td>
-          <td><mat-icon svgIcon="delete_forever" ></mat-icon></td>
+       <tr  *ngFor="let list of userList; let rindex=index">
+          <td><img [src]="list.imageUrl"  /></td>
+          <td>{{list.firstname}} {{list.lasttname}}</td>
+          <td>{{list.email}}</td>
+          <td>{{list.mobile}}</td>
+          <td (click)="edtiUSer(rindex,list)"><mat-icon svgIcon="edit"></mat-icon></td>
+          <td (click)="deleteUser(rindex,list)"><mat-icon svgIcon="delete_forever" ></mat-icon></td>
        </tr>
  
      
        
     </table>
  </div>
-   
+ <div  *ngIf="userList.length==0">
+   <!-- <mat-icon svgIcon="heroicons_solid:users" ></mat-icon> -->
+    <span style="font-size: 60px; margin-left: 320px;">No User List</span>
+ </div>
 <!-- </div> -->

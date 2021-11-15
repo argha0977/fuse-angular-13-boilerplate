@@ -7,12 +7,14 @@ import { SharedModule } from 'app/shared/shared.module';
 import { usersRoutes } from './users.routing';
 import { UsersidebarComponent } from './usersidebar/usersidebar.component';
 import { UserlistComponent } from './userlist/userlist.component';
+import { AdduserformComponent } from './adduserform/adduserform.component';
 
 @NgModule({
   declarations: [
     UsersComponent,
     UsersidebarComponent,
-    UserlistComponent
+    UserlistComponent,
+    AdduserformComponent
   ],
   imports: [
     RouterModule.forChild(usersRoutes),
