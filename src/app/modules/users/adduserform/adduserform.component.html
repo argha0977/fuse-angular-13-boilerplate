@@ -1,1 +1,100 @@
-<p>adduserform works!</p>
+<div>
+<mat-toolbar matDialogTitle >
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+        <span class="title dialog-title">{{dialogTitle}}</span>
+        <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+    <div mat-dialog-content >
+        <!-- <h2>{{dialogTitle}}</h2> -->
+        <form name="contactForm"  [formGroup]="contactForm">
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>First Name</mat-label>
+                    <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+                    <input name="firstname" formControlName="firstname" [(ngModel)]="user.firstname" matInput >
+                    <!-- <mat-error>First Name is required!</mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Last Name</mat-label>
+                    <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+                    <input name="lastname" formControlName="lastname" [(ngModel)]="user.lastname" matInput >
+                    <!-- <mat-error>Last Name is required!</mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Mobile number</mat-label>
+                    <input formControlName="mobile" [(ngModel)]="user.mobile" matInput   maxlength="10">
+                        <mat-icon matSuffix class="secondary-text">mobile_friendly</mat-icon>
+                        <!-- <mat-error>Mobile Number is required!</mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start start" >
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Password</mat-label>
+                    <input [type]="!visible ? 'password' : 'text'" formControlName="password" [(ngModel)]="user.password" matInput maxlength="10">
+                    <mat-icon matSuffix class="secondary-text" (click)= "visible= !visible">{{!visible ? 'visibility' : 'visibility_off'}}</mat-icon>
+                    <!-- <mat-error>Password is required!</mat-error>   [type]="!visible ? 'password' : 'text'" -->
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Email</mat-label>
+                    <mat-icon matSuffix class="secondary-text">email</mat-icon>
+                    <input name="email" formControlName="email" [(ngModel)]="user.email" matInput required type="email">
+                    <!-- <mat-error *ngIf="!contactForm.get('email').hasError('required') &&
+                        contactForm.get('email').hasError('email')">
+                        Please enter a valid email address
+                    </mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-label>Role</mat-label>
+                    <mat-select formControlName="role" [(ngModel)]="user.role">
+                        <mat-option *ngFor="let role of roles" [value]="role.name">
+                            {{role.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-icon matSuffix class="secondary-text">person_outline</mat-icon>
+                </mat-form-field>
+            </div>
+
+          
+
+        </form>
+
+    </div>
+    <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+
+      
+
+        <button *ngIf="action !== 'edit'"
+                mat-button
+                class="save-button"
+                (click)="onSave()"
+                aria-label="SAVE">
+            ADD
+        </button>
+
+        <button *ngIf="action === 'edit'"
+                mat-button
+                class="save-button"
+                (click)="onSave()"
+                aria-label="SAVE">
+            UPDATE
+        </button>
+
+    </div>
+</div>
