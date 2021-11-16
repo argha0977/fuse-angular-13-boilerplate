@@ -1,7 +1,7 @@
 <!-- <div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent"> -->
   
 <div class="table-users" *ngIf="userList.length>0">
-    <div class="header"></div>
+    <!-- <div class="header"></div> -->
     
     <table cellspacing="0">
        <tr>
@@ -15,11 +15,11 @@
  
        <tr  *ngFor="let list of userList; let rindex=index">
           <td><img [src]="list.imageUrl"  /></td>
-          <td>{{list.firstname}} {{list.lasttname}}</td>
+          <td>{{list.firstname}} {{list.lastname}}</td>
           <td>{{list.email}}</td>
           <td>{{list.mobile}}</td>
-          <td (click)="edtiUSer(rindex,list)"><mat-icon svgIcon="edit"></mat-icon></td>
-          <td (click)="deleteUser(rindex,list)"><mat-icon svgIcon="delete_forever" ></mat-icon></td>
+          <td (click)="edtiUSer(rindex,list)"><mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon></td>
+          <td (click)="deleteUser(rindex,list)"><mat-icon [svgIcon]="'heroicons_outline:trash'" ></mat-icon></td>
        </tr>
  
      

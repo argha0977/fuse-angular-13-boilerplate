@@ -1,4 +1,40 @@
-<div fxLayout="row" fxLayoutAlign="start center" > <h2 style="color:blue;font-weight:800;margin-bottom: 20px; margin-top:20px;margin-left:10px;">Filter User</h2> </div>
+<div class="flex flex-auto">
+    <form class="flex flex-col flex-auto p-6 pt-10 sm:p-8 sm:pt-10 overflow-y-auto">
+        <!-- Header -->
+        <div class="flex items-center justify-between -mt-3 -ml-4">
+            <button class="pr-4 pl-3.5" mat-button >
+            
+                <!-- Filter User Title -->
+                <ng-container>
+                    <div class="flex items-center justify-center">
+                        <mat-icon [svgIcon]="'heroicons_outline:search'"></mat-icon>
+                        <span class="ml-2 font-semibold">Filter User</span>
+                    </div>
+                </ng-container>
+            
+            </button>
+        </div>
+        <mat-divider class="mt-6 mb-8"></mat-divider>
+
+        <!-- Role -->
+        <div>
+            <mat-form-field class="flex-auto gt-xs:pr-3 w-full">
+                <select matNativeControl [placeholder]="'Select Role'" name="role" [(ngModel)]="criteria.role">
+                    <option *ngFor="let role of roles" [value]="role.name">
+                    {{role.name}}</option>
+                </select>
+                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'"></mat-icon>
+            </mat-form-field>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="end center" style="margin-bottom: 20px; margin-top:20px;margin-left:10px;">
+            <button mat-raised-button color="primary" (click)="onFilter()" class="submit-button" aria-label="Filter">
+                Filter
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- <div fxLayout="row" fxLayoutAlign="start center" > <h2 style="color:blue;font-weight:800;margin-bottom: 20px; margin-top:20px;margin-left:10px;">Filter User</h2> </div>
 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" style="margin-bottom: 20px; margin-top:20px;margin-left:10px;">     
     <mat-form-field class="side-gap" appearance="outline" fxFlex="100">
         <mat-label>Select Role</mat-label>
@@ -13,4 +49,4 @@
     <button mat-raised-button color="primary" (click)="onFilter()" class="submit-button" aria-label="Filter" >
         Filter
     </button>
-</div>
+</div> -->

@@ -57,9 +57,8 @@
             <span class="ml-2 mr-1">Add</span>
            </button>
             <button
-                mat-icon-button (click)="matDrawer.toggle()"
-                >
-                <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
+                mat-icon-button (click)="matDrawer.toggle()">
+                <mat-icon [svgIcon]="'heroicons_outline:search'"></mat-icon>
             </button>
         </div>
     </div>
@@ -71,12 +70,12 @@
        class="w-72 dark:bg-gray-900"
        [autoFocus]="false"
        [mode]="drawerMode"
-       [opened]="drawerOpened"
+       [opened]="false"
        [position]="'end'"
        #matDrawer>
        <!-- Demo sidebar -->
-       <app-usersidebar></app-usersidebar>
-   </mat-drawer>
+            <app-usersidebar></app-usersidebar>
+        </mat-drawer>
       
 
         <!-- Drawer content -->
