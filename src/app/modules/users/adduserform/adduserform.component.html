@@ -42,7 +42,7 @@
     </mat-form-field>
     <mat-form-field > 
         <mat-label>Role</mat-label>
-                    <mat-select formControlName="role" [(ngModel)]="user.role">
+                    <mat-select name="role" formControlName="role" [(ngModel)]="user.role">
                         <mat-option *ngFor="let role of roles" [value]="role.name">
                             {{role.name}}
                         </mat-option>

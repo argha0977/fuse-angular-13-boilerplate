@@ -50,11 +50,10 @@ passwordFlag = true;
   { 
     this._unsubscribeAll = new Subject();
     this.currentUser= this.commonService.getItem('currentUser');
-    this.getDefaultRoles();
     this.action = _data.action;
     if ( this.action === 'edit' )
     {
-        this.dialogTitle = 'Edit User/Employee';
+        this.dialogTitle = 'Edit User';
         this.updateFlag = true;
         this.user = _data.user;
         // this.passwordFlag = false;
@@ -62,10 +61,11 @@ passwordFlag = true;
     }
     else
     {
-        this.dialogTitle = 'New User/Employee';
+        this.dialogTitle = 'New User';
         this.user.imageUrl = this.userService.profilePic('noluser.png');
     }
     this.contactForm = this.createContactForm();
+    this.getDefaultRoles();
   }
 
   
@@ -93,10 +93,9 @@ passwordFlag = true;
             for(let i=0;i<defaultRoles.length;i++){
               this.roles.push(defaultRoles[i]);
             }
-           if(this.roles.length>0 && this.action === 'add') {
+           if(this.roles.length>0 && this.action === 'new') {
             this.user.role=this.roles[0].name; 
            }
-            console.log(this.roles);
         })
 }
 onSave() {
