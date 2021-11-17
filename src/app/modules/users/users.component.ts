@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
@@ -19,7 +19,7 @@ export class UsersComponent implements OnInit {
     dialogRef: any;
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
-  constructor(private _fuseMediaWatcherService: FuseMediaWatcherService, private _matDialog: MatDialog,) { }
+  constructor(private _fuseMediaWatcherService: FuseMediaWatcherService, private _matDialog: MatDialog, private _changeDetectorRef: ChangeDetectorRef,) { }
 
   ngOnInit(): void {
  // Subscribe to media changes
@@ -51,21 +51,34 @@ export class UsersComponent implements OnInit {
         this._unsubscribeAll.complete();
     }
     createUsers() :void {
-      this.dialogRef = this._matDialog.open(AdduserformComponent, {
-        panelClass: 'contact-form-dialog',
+      // this.dialogRef = this._matDialog.open(AdduserformComponent, {
+        
+      //   panelClass: 'contact-form-dialog',
+      //   data: {
+      //     action: 'new'
+      //   }
+        
+      // });
+  
+      // this.dialogRef.afterClosed()
+      //   .subscribe((response: any) => {
+      //     if (!response) {
+      //       return;
+      //     }
+  
+      //     //this._contactsService.updateContact(response.getRawValue());
+      //   });
+      const dialogRef = this._matDialog.open(AdduserformComponent,{
         data: {
-          action: 'new'
-        }
-      });
-  
-      this.dialogRef.afterClosed()
-        .subscribe((response: any) => {
-          if (!response) {
-            return;
-          }
-  
-          //this._contactsService.updateContact(response.getRawValue());
-        });
+        action: 'new'
+            }
+      }
+        );
+
+      dialogRef.afterClosed()
+               .subscribe((result) => {
+                   console.log('Compose dialog was closed!');
+               });
 
     }
 

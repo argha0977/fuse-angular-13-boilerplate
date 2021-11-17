@@ -13,7 +13,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './adduserform.component.html',
   styleUrls: ['./adduserform.component.scss']
 })
-export class AdduserformComponent  {
+export class AdduserformComponent  {//implements OnInit
 // Private
 private _unsubscribeAll: Subject<any>;
 
@@ -35,6 +35,12 @@ dialogTitle: string;
 roles = [];
 passwordFlag = true;
  visible = false;
+//  constructor( ){
+
+//  }
+//  ngOnInit(): void {
+   
+//  }
   constructor(  public matDialogRef: MatDialogRef<AdduserformComponent>,
     @Inject(MAT_DIALOG_DATA) private _data: any,
     private _formBuilder: FormBuilder,
@@ -61,6 +67,8 @@ passwordFlag = true;
     }
     this.contactForm = this.createContactForm();
   }
+
+  
   createContactForm(): FormGroup
   {
       return this._formBuilder.group({
