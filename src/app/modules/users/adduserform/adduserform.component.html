@@ -18,27 +18,31 @@
       <mat-form-field>
         <mat-label>First Name</mat-label>
         <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-        <input name="firstname" formControlName="firstname" [(ngModel)]="user.firstname" matInput >
+        <input name="firstname" formControlName="firstname" [(ngModel)]="user.firstname" matInput required>
+        <mat-error>First Name is required!</mat-error>
     </mat-form-field>
     <mat-form-field>
         <mat-label>Last Name</mat-label>
         <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-        <input name="lastname" formControlName="lastname" [(ngModel)]="user.lastname" matInput >
+        <input name="lastname" formControlName="lastname" [(ngModel)]="user.lastname" matInput required>
+        <mat-error>Last Name is required!</mat-error>
     </mat-form-field>
     <mat-form-field>
         <mat-label>Mobile number</mat-label>
         <mat-icon matSuffix class="secondary-text">mobile_friendly</mat-icon>
-        <input name="mobile" formControlName="mobile" [(ngModel)]="user.mobile" matInput >
+        <input name="mobile" formControlName="mobile" [(ngModel)]="user.mobile" matInput required>
+        <mat-error>Mobile No is required!</mat-error>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field *ngIf="!updateFlag">
         <mat-label>Password</mat-label>
         <mat-icon matSuffix class="secondary-text" (click)= "visible= !visible">{{!visible ? 'visibility' : 'visibility_off'}}</mat-icon>
-        <input [type]="!visible ? 'password' : 'text'" formControlName="password" [(ngModel)]="user.password" matInput maxlength="10">
+        <input [type]="!visible ? 'password' : 'text'" formControlName="password" [(ngModel)]="user.password" matInput maxlength="10" required>
+        <mat-error>Password is required!</mat-error>
     </mat-form-field>
     <mat-form-field>
         <mat-label>Email</mat-label>
         <mat-icon matSuffix class="secondary-text">email</mat-icon>
-        <input name="email" formControlName="email" [(ngModel)]="user.email" matInput required type="email">
+        <input name="email" formControlName="email" [(ngModel)]="user.email" matInput  type="email">
     </mat-form-field>
     <mat-form-field > 
         <mat-label>Role</mat-label>
