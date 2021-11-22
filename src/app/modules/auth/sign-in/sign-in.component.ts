@@ -30,7 +30,8 @@ export class AuthSignInComponent implements OnInit, OnDestroy
     };
     signInForm: FormGroup;
     showAlert: boolean = false;
-
+    signingin = false;
+    signinButtontext = 'LOGIN';
     user = { userid: '', password: '' };
 
     /**
@@ -100,15 +101,11 @@ export class AuthSignInComponent implements OnInit, OnDestroy
         this.userService.signin(this.user)
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((response) => {
+                let currentUser = JSON.parse(JSON.stringify(response));
                 this.commonService.setItem('currentUser', response);
                 this.store.dispatch(signin({user: response}));
-                // Set the redirect url.
-                // The '/signed-in-redirect' is a dummy url to catch the request and redirect the user
-                // to the correct page after a successful sign in. This way, that url can be set via
-                // routing file and we don't have to touch here.
-                const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
-                // Navigate to the redirect url
-                this._router.navigateByUrl(redirectURL);
+                this.getDefaultRoles(currentUser);
+               
 
             },
                 (respError) => {
@@ -164,5 +161,41 @@ export class AuthSignInComponent implements OnInit, OnDestroy
                     this.showAlert = true;
                 }
             ); */
+    }
+
+    getDefaultRoles(user: any) {
+        this.commonService.getDefaultRole()
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(response => {
+                let defaultRoles = JSON.parse(JSON.stringify(response));
+                //console.log(response);
+                let index = defaultRoles.map( item => item.name).indexOf(user.role);
+                if(index >= 0) {
+                    // this.store.dispatch(new SetUserRoleAction(defaultRoles[index]));
+                    this.commonService.setItem('currentRole', defaultRoles[index]);
+                    this.redirectToDashboad(user, defaultRoles[index]);
+                }
+                //else this.getCustomRole(user);
+            })
+    }
+
+    redirectToDashboad(currentUser: any, role: any) {
+        this.signingin = false;
+        this.signinButtontext = 'LOGIN';
+        if (currentUser.onetime) {
+            this._router.navigateByUrl('reset-password');
+        }
+        else {
+            // if (role.privilege.indexOf('App Dashboard') >= 0){
+            //     //Redirect to App Dashboard
+            //     this.router.navigate(['/pages/appdashboard']);
+            // }
+            // else {
+                //Redirect to Dashboard
+                 const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
+                this._router.navigateByUrl(redirectURL);
+            // }
+            
+        }
     }
 }
