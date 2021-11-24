@@ -4,7 +4,11 @@ import { BooleanInput } from '@angular/cdk/coercion';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { User } from 'app/core/user/user.types';
-import { UserService } from 'app/core/user/user.service';
+/* import { UserService } from 'app/core/user/user.service'; */
+import { Store } from '@ngrx/store';
+import { CommonService } from 'app/services/common.service';
+import { UserService } from 'app/services/user.service';
+import { signin } from 'app/store/actions/user.actions';
 
 @Component({
     selector       : 'user',
@@ -20,7 +24,17 @@ export class UserComponent implements OnInit, OnDestroy
     /* eslint-enable @typescript-eslint/naming-convention */
 
     @Input() showAvatar: boolean = true;
-    user: User;
+    //user: User;
+
+    //user: User;
+    user = {
+        firstname: '',
+        lastname: '',
+        imageUrl: '',
+        email: '',
+        role: '',
+        status: ''
+    };
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -30,7 +44,10 @@ export class UserComponent implements OnInit, OnDestroy
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _router: Router,
-        private _userService: UserService
+        //private _userService: UserService,
+        private store: Store<{ user: any }>,
+        private commonService: CommonService,
+        private userService: UserService
     )
     {
     }
@@ -44,15 +61,16 @@ export class UserComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+        this.getUserFromStore();
         // Subscribe to user changes
-        this._userService.user$
+        /* this._userService.user$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((user: User) => {
                 this.user = user;
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
-            });
+            }); */
     }
 
     /**
@@ -69,6 +87,27 @@ export class UserComponent implements OnInit, OnDestroy
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
+    async getUserFromStore() {
+        this.store.select('user')
+            .subscribe(response => {
+
+                if (response.user) {
+                    this.user = JSON.parse(JSON.stringify(response.user));
+                    this.user.imageUrl = this.userService.profilePic(this.user['image']);
+                    // Mark for check
+                    this._changeDetectorRef.markForCheck();
+                }
+                else this.getUserFromStorage();
+            })
+
+    }
+
+    getUserFromStorage() {
+        let user = this.commonService.getItem('currentUser');
+        console.log(user);
+        if (user) this.store.dispatch(signin({ user: user }));
+    }
+
     /**
      * Update the user status
      *
@@ -83,10 +122,17 @@ export class UserComponent implements OnInit, OnDestroy
         }
 
         // Update the user
-        this._userService.update({
+        /* this._userService.update({
             ...this.user,
             status
-        }).subscribe();
+        }).subscribe(); */
+    }
+
+    /**
+     * Sign out
+     */
+    showProfile(): void {
+        this._router.navigate(['/profile']);
     }
 
     /**
