@@ -45,9 +45,17 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:clipboard-check',
                 link: '/users'
-            }
+            },
+            {
+                id: 'settings.profile',
+                title: 'Profile',
+                type: 'basic',
+                icon: 'iconsmind:moustache_smiley',
+                link: '/profile'
+            },
         ]
     }
+   
 ];
 export const compactNavigation: FuseNavigationItem[] = [
     {
@@ -76,6 +84,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
     }
 ];
+
 
 /* export const defaultNavigation: FuseNavigationItem[] = [
     {

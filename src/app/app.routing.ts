@@ -99,7 +99,13 @@ export const appRoutes: Route[] = [
                     { path: 'users', loadChildren: () => import('app/modules/users/users.module').then(m => m.UsersModule) },
                 ]
             },
-
+            // Profile routes
+            {
+                path: '',
+                children: [
+                    { path: 'profile', loadChildren: () => import('app/modules/profile/profile.module').then(m => m.ProfileModule) },
+                ]
+            },
             // Apps
             /* {path: 'apps', children: [
                 {path: 'academy', loadChildren: () => import('app/modules/admin/apps/academy/academy.module').then(m => m.AcademyModule)},
