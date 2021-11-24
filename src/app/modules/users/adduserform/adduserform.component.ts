@@ -109,6 +109,22 @@ onSave() {
 }
 
 createUser() {
+  if(!this.user.firstname){
+    this.commonService.showSnakBarMessage('Enter Users Firstname', 'error', 2000);
+    return;
+  }
+  if(!this.user.lastname){
+    this.commonService.showSnakBarMessage('Enter Users Lastname', 'error', 2000);
+    return;
+  }
+  if(!this.user.mobile){
+    this.commonService.showSnakBarMessage('Enter a Users Mobile No. ', 'error', 2000);
+    return;
+  }
+  if(!this.user.password){
+    this.commonService.showSnakBarMessage('Enter a Password. ', 'error', 2000);
+    return;
+  }
   let obj = JSON.parse(JSON.stringify(this.user));
   //console.log(obj);
   obj.ocode = this.currentUser.ocode;
@@ -130,6 +146,18 @@ createUser() {
 }
 
 updateUser() {
+  if(!this.user.firstname){
+    this.commonService.showSnakBarMessage('Enter Users Firstname', 'error', 2000);
+    return;
+  }
+  if(!this.user.lastname){
+    this.commonService.showSnakBarMessage('Enter Users Lastname', 'error', 2000);
+    return;
+  }
+  if(!this.user.mobile){
+    this.commonService.showSnakBarMessage('Enter a Users Mobile No. ', 'error', 2000);
+    return;
+  }
   let obj = JSON.parse(JSON.stringify(this.user));
   obj.cuserid = this.currentUser.userid;
   let imageUrl = obj.imageUrl;
