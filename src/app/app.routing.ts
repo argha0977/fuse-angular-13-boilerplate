@@ -103,7 +103,7 @@ export const appRoutes: Route[] = [
             {
                 path: '',
                 children: [
-                    { path: 'profile', loadChildren: () => import('app/modules/profile/profile.module').then(m => m.ProfileModule) },
+                    { path: 'profile/:id', loadChildren: () => import('app/modules/profile/profile.module').then(m => m.ProfileModule) },
                 ]
             },
             // Apps

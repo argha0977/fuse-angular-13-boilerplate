@@ -5,7 +5,7 @@
  <div>
     <img
         class="h-40 lg:h-80 object-cover"
-        src="assets/images/pages/profile/1.jpg"
+        [src]="coverUrl"
         alt="Cover image">
 </div>
 
@@ -15,18 +15,19 @@
     <div class="-mt-26 lg:-mt-22 rounded-full">
         <img
             class="w-32 h-32 rounded-full ring-4 ring-bg-card"
-            src="assets/images/avatars/male-04.jpg"
+            [src]="user.imageURL"
             alt="User avatar">
     </div>
 
     <!-- Details -->
     <div class="flex flex-col items-center lg:items-start mt-4 lg:mt-0 lg:ml-8">
-        <div class="text-lg font-bold leading-none">Brian Hughes</div>
-        <div class="text-secondary">London, UK</div>
+        <div class="text-lg font-bold leading-none">{{user.firstname}} {{user.lastname}}</div>
+        <div class="text-secondary ">{{user.status}}</div>
+        
     </div>
 
     <!-- Separator -->
-    <div class="hidden lg:flex h-8 mx-8 border-l-2"></div>
+    <!-- <div class="hidden lg:flex h-8 mx-8 border-l-2"></div> -->
 
     <!-- Stats -->
     <!-- <div class="flex items-center mt-6 lg:mt-0 space-x-6">
@@ -76,39 +77,62 @@
 
         <!-- About me -->
         <fuse-card class="flex flex-col max-w-80 w-full p-8">
-            <div class="text-2xl font-semibold leading-tight">About Me</div>
-            <div class="mt-4">
+            <div class="text-2xl font-semibold leading-tight">{{About}}</div>
+            <!-- <div class="mt-4">
                 I’m a friendly kitchen assistant who suffers from a severe phobia of buttons.
                 <br><br>
                 Brother of Elijah Jay Watkins, who has phobia of buttons and trust issues.
-            </div>
+            </div> -->
             <hr class="w-full border-t my-6">
-            <div class="flex flex-col">
+            <div class="flex flex-col" *ngIf="!AboutmeFlag">
+                
                 <div class="flex items-center">
                     <mat-icon
                         class="icon-size-5 mr-3"
-                        [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
-                    <span class="leading-none">London, UK</span>
+                        [svgIcon]="'heroicons_solid:phone'"></mat-icon>
+                    <span class="leading-none">{{user.mobile }}</span>
                 </div>
-                <div class="flex items-center mt-4">
+                <div class="flex items-center mt-4" >
                     <mat-icon
                         class="icon-size-5 mr-3"
-                        [svgIcon]="'heroicons_solid:briefcase'"></mat-icon>
-                    <span class="leading-none">ACME Corp. Lead UX Designer</span>
+                        [svgIcon]="'heroicons_solid:mail'"></mat-icon>
+                    <span class="leading-none">{{user.email}}</span>
                 </div>
-                <div class="flex items-center mt-4">
-                    <mat-icon
-                        class="icon-size-5 mr-3"
-                        [svgIcon]="'heroicons_solid:cake'"></mat-icon>
-                    <span class="leading-none">April, 24</span>
-                </div>
+                
             </div>
-            <button
+
+            <div class="flex flex-col" *ngIf="AboutmeFlag">
+                <mat-form-field class="flex items-center" >
+                
+                        <mat-label>Email</mat-label>
+                        <mat-icon matSuffix class="secondary-text">email</mat-icon>
+                        <input name="email" [(ngModel)]="aboutEdit.email" matInput  type="email">
+                </mat-form-field>
+               
+                <mat-form-field class="flex items-center mt-4" >
+                        <mat-label>Mobile number</mat-label>
+                        <mat-icon matSuffix class="secondary-text">mobile_friendly</mat-icon>
+                        <input name="mobile" [(ngModel)]="aboutEdit.mobile" matInput required>
+                        <mat-error>Mobile No is required!</mat-error>
+                    </mat-form-field>
+
+                
+                
+            </div>
+            
+            <button *ngIf="!AboutmeFlag"
                 class="px-6 mt-8"
                 mat-flat-button
                 [color]="'primary'"
-                [routerLink]="['./']">
-                See complete bio
+                (click)="editAboutMe()">
+                Edit Details
+            </button>
+            <button *ngIf="AboutmeFlag"
+                class="px-6 mt-8"
+                mat-flat-button
+                [color]="'primary'"
+                (click)="saveAboutMe()">
+                Save
             </button>
         </fuse-card>
     </div>
@@ -118,43 +142,86 @@
 
         <!-- Create Post -->
         <fuse-card class="flex flex-col max-w-140 w-full p-6 sm:p-8 pb-6">
-            <div class="text-xl font-semibold">Create Post</div>
+            <div class="text-xl font-semibold" *ngIf="!postFlag">{{user.firstname}}'s Post</div>
+            <div class="text-xl font-semibold" *ngIf="postFlag">Edit Post</div>
             <div class="flex flex-col sm:flex-row items-start mt-8">
-                <div class="flex items-center mb-6 sm:mb-0">
+                <div class="flex items-center mb-6 sm:mb-0" *ngIf="!postFlag">
                     <img
                         class="w-12 min-w-12 h-12 rounded-full mr-4"
-                        src="assets/images/avatars/brian-hughes.jpg"
+                        [src]="user.imageURL"
                         alt="Card cover image">
                     <div class="sm:hidden">Brian Hughes</div>
                 </div>
-                <mat-form-field class="fuse-mat-textarea fuse-mat-no-subscript w-full">
+                <div class="fuse-mat-textarea fuse-mat-no-subscript w-full" *ngIf="!postFlag">
+                 <div class=" leading-none marginbottom"> Role: {{user.role}}</div>
+                 <div class=" leading-none marginbottom"> Added On: {{user.addedon|date:'dd/MM/yyyy'}}</div> 
+            
+                 <div class=" leading-none"> Lastupdated On: {{user.lastupdatedon|date:'dd/MM/yyyy'}}</div> 
+                </div>
+                <mat-form-field class="fuse-mat-textarea fuse-mat-no-subscript w-full" *ngIf="postFlag"> 
+                    <mat-label>Role</mat-label>
+                                <mat-select name="role"[(ngModel)]="postEdit.role">
+                                    <mat-option *ngFor="let role of roles" [value]="role.name">
+                                        {{role.name}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-icon matSuffix class="secondary-text">person_outline</mat-icon>
+                </mat-form-field>
+                <mat-form-field class="fuse-mat-textarea fuse-mat-no-subscript w-full" *ngIf="postFlag">
+                    <mat-label>First Name</mat-label>
+                    <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+                    <input name="firstname"  [(ngModel)]="postEdit.firstname" matInput required>
+                    <mat-error>First Name is required!</mat-error>
+                </mat-form-field>
+                <mat-form-field class="fuse-mat-textarea fuse-mat-no-subscript w-full" *ngIf="postFlag">
+                    <mat-label>Last Name</mat-label>
+                    <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+                    <input name="lastname" [(ngModel)]="postEdit.lastname" matInput required>
+                    <mat-error>Last Name is required!</mat-error>
+                </mat-form-field>
+                <!-- <mat-form-field class="fuse-mat-textarea fuse-mat-no-subscript w-full">
                     <textarea
                         matInput
-                        [placeholder]="'What\'s on your mind?'"
+                        
                         [rows]="3"
-                        matTextareaAutosize></textarea>
-                </mat-form-field>
+                        matTextareaAutosize readonly> {{user.role}}</textarea>
+                </mat-form-field> -->
             </div>
+          
             <div class="flex items-center mt-6 sm:mt-8 -mx-3">
-                <button
+                <div>
+                <button 
                     class="px-3 mr-1"
                     mat-button
-                    [routerLink]="['./']">
-                    <mat-icon
+                    for="select">
+                    <label for="select">
+                        <mat-icon
                         class="icon-size-5 mr-2"
                         [svgIcon]="'heroicons_solid:photograph'"></mat-icon>
-                    <span>Photo / Video</span>
+                    <span>{{(!user.image) ? 'Upload Photo' : 'Change Photo'}}</span>
+                    </label>
                 </button>
-                <button
+                <input type="file" id="select" style="display: none;" (change)="onFileSelect($event.target.files)">
+            </div>
+                <button *ngIf="!postFlag"
                     class="px-3 mr-1 hidden sm:inline-flex"
                     mat-button
-                    [routerLink]="['./']">
+                    (click)="editPost()">
                     <mat-icon
                         class="icon-size-5 mr-2"
                         [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
-                    <span>Tag Friends</span>
+                    <span>Edit Post</span>
                 </button>
-                <button
+                <button *ngIf="postFlag"
+                class="px-3 mr-1 hidden sm:inline-flex"
+                mat-button
+                (click)="savePost()">
+                <mat-icon
+                    class="icon-size-5 mr-2"
+                    [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                <span>save</span>
+            </button>
+                <!-- <button
                     class="px-3 mr-1 hidden sm:inline-flex"
                     mat-button
                     [routerLink]="['./']">
@@ -218,7 +285,7 @@
                             <span>Check in</span>
                         </span>
                     </button>
-                </mat-menu>
+                </mat-menu> -->
             </div>
         </fuse-card>
 

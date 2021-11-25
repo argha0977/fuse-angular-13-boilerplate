@@ -45,14 +45,8 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:clipboard-check',
                 link: '/users'
-            },
-            {
-                id: 'settings.profile',
-                title: 'Profile',
-                type: 'basic',
-                icon: 'iconsmind:moustache_smiley',
-                link: '/profile'
-            },
+            }
+            
         ]
     }
    
