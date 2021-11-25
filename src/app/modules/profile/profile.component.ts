@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { CommonService } from 'app/services/common.service';
 import { UserService } from 'app/services/user.service';
+import { signin } from 'app/store/actions/user.actions';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -23,12 +25,14 @@ export class ProfileComponent implements OnInit {
   roles=[];
   postEdit={role:'',firstname:'',lastname:''};
   aboutEdit={email:'',mobile:''};
-  constructor(private activeRoute: ActivatedRoute, private userService:UserService,private commonService:CommonService ) 
+  currentUser:any;
+  constructor(private activeRoute: ActivatedRoute, private userService:UserService,private commonService:CommonService ,   private store: Store<{ user: any }>,) 
   { 
     this._unsubscribeAll = new Subject();
   }
 
   ngOnInit(): void {
+    this.currentUser= this.commonService.getItem('currentUser');
     this.activeRoute.params.subscribe(params => { console.log(params);
       if (params['id']) {
         this.id = params['id'];
@@ -86,12 +90,20 @@ export class ProfileComponent implements OnInit {
     let obj= JSON.parse(JSON.stringify(this.user));
     obj['email']=this.aboutEdit.email;
     obj['mobile']=this.aboutEdit.mobile;
+    obj['cuserid']=this.currentUser.userid;
     delete obj.imageURL;
     this.userService.update(obj) 
     .pipe(takeUntil(this._unsubscribeAll))
     .subscribe(response => {
      console.log(response);
      this.user=JSON.parse(JSON.stringify(response));
+     if(this.user.image!=''){
+      this.user.imageURL = this.userService.profilePic(this.user.image);
+     }
+     if(this.currentUser.userid==this.user.userid){
+      this.commonService.setItem('currentUser', this.user);
+      this.store.dispatch(signin({user: this.user}));
+    }
      this.About='Contact Info';
      this.AboutmeFlag=false;
    },
@@ -109,12 +121,22 @@ export class ProfileComponent implements OnInit {
     obj['role']=this.postEdit.role;
     obj['firstname']=this.postEdit.firstname;
     obj['lastname']=this.postEdit.lastname;
+    obj['cuserid']=this.currentUser.userid;
     delete obj.imageURL;
     this.userService.update(obj) 
     .pipe(takeUntil(this._unsubscribeAll))
     .subscribe(response => {
      console.log(response);
      this.user=JSON.parse(JSON.stringify(response));
+     if(this.currentUser.userid==this.user.userid){
+      this.commonService.setItem('currentUser', this.user);
+      this.store.dispatch(signin({user: this.user}));
+    }
+     if(this.user.image!=''){
+      this.user.imageURL = this.userService.profilePic(this.user.image);
+     }
+   
+     
      this.postFlag=false;
    },
    respError => {
@@ -128,17 +150,24 @@ export class ProfileComponent implements OnInit {
         let formData = new FormData();
         formData.append('file', fileItem, fileItem.name);
         for (let key in this.user) {
-            if (key != 'imageUrl') {
+            if (key != 'imageURL') {
                 formData.append(key, this.user[key]);
             }
         }
         this.userService.upload(formData)
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(response => {
+            .subscribe(response => {console.log(response);
                 let user = JSON.parse(JSON.stringify(response));
                 this.user.image = user.image;
-                this.commonService.setItem('currentUser', this.user);
-                this.user.imageURL = this.userService.profilePic(this.user.image);
+                if(this.user.image!=''){
+                  this.user.imageURL = this.userService.profilePic(this.user.image);
+                 }
+                if(this.currentUser.userid==this.user.userid){
+                  this.commonService.setItem('currentUser', this.user);
+                  this.store.dispatch(signin({user: this.user}));
+                }
+              
+                
             }, respError => {
                 this.commonService.showSnakBarMessage(respError, 'error', 2000);
             });
