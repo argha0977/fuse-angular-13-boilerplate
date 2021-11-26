@@ -196,7 +196,9 @@
                     <input name="firstname"  [(ngModel)]="postEdit.firstname" matInput required>
                     <mat-error>First Name is required!</mat-error>
                 </mat-form-field>
-                <mat-form-field class="fuse-mat-textarea fuse-mat-no-subscript w-full" *ngIf="postFlag">
+                 </div>
+                 <div fxLayout="row" *ngIf="postFlag">
+                    <mat-form-field >
                     <mat-label>Last Name</mat-label>
                     <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
                     <input name="lastname" [(ngModel)]="postEdit.lastname" matInput required>
