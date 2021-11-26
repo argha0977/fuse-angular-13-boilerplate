@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { CommonService } from 'app/services/common.service';
 import { UserService } from 'app/services/user.service';
 import { signin } from 'app/store/actions/user.actions';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-profile',
@@ -14,7 +15,10 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class ProfileComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
-  id='';
+  // @Input() userid: string;
+  // @Output() updateParent = new EventEmitter<boolean>();
+  
+  Id='';
   user={
     addedby: "",addedon: "",email: "",firstname: "",image: "",lastname: "",lastupdatedby: "",lastupdatedon: "",mobile: "",ocode: "",office:'',
     onetime: false,password: "",role: "",selected: false,status: "",userid: "",_id: '' ,imageURL:'' };
@@ -26,23 +30,35 @@ export class ProfileComponent implements OnInit {
   postEdit={role:'',firstname:'',lastname:''};
   aboutEdit={email:'',mobile:''};
   currentUser:any;
-  constructor(private activeRoute: ActivatedRoute, private userService:UserService,private commonService:CommonService ,   private store: Store<{ user: any }>,) 
+  userFlag=false;
+  constructor(  private _router: Router,
+    private activeRoute: ActivatedRoute, private userService:UserService,private commonService:CommonService ,   private store: Store<{ user: any }>,) 
   { 
     this._unsubscribeAll = new Subject();
   }
 
   ngOnInit(): void {
     this.currentUser= this.commonService.getItem('currentUser');
+    // console.log(this.userid);
     this.activeRoute.params.subscribe(params => { console.log(params);
       if (params['id']) {
-        this.id = params['id'];
-        console.log(this.id );
+        this.Id = params['id'];
+        console.log(this.Id );
         this.coverUrl='assets/images/pages/profile/'+ this.commonService.getRandom(1,30)+'.jpg';
         this.getCurrentUser();
         this.getDefaultRoles();
       }
+      if (params['from']=='users') {
+       this.userFlag=true;
+      }
 
         })
+      //   console.log(this.userid);
+      //  if(this.userid!='') {
+      //   this.Id= this.userid; 
+      //   this.getCurrentUser();
+      //   this.getDefaultRoles();
+      //  }
   }
   ngOnDestroy(): void
   {
@@ -50,15 +66,18 @@ export class ProfileComponent implements OnInit {
       this._unsubscribeAll.next();
       this._unsubscribeAll.complete();
   }
+  back2list(){
+    this._router.navigate(['/users']);
+  }
   getCurrentUser(){
-    this.userService.show(this.id) 
+    this.userService.show(this.Id) 
    .pipe(takeUntil(this._unsubscribeAll))
    .subscribe(response => {
     console.log(response);
     this.user=JSON.parse(JSON.stringify(response));
-    if(this.user.image){
+    // if(this.user.image){
       this.user.imageURL= this.userService.profilePic(this.user.image);
-    }
+    // }
   },
   respError => {
       this.commonService.showSnakBarMessage(respError, 'error', 2000);
@@ -102,9 +121,9 @@ export class ProfileComponent implements OnInit {
         //this.commonService.setItem('currentUser', response);
         this.store.dispatch(signin({ user: response }));
       }
-      if(this.user.image){
+      // if(this.user.image){
       this.user.imageURL = this.userService.profilePic(this.user.image);
-     }
+    //  }
      
      this.About='Contact Info';
      this.AboutmeFlag=false;
@@ -134,9 +153,9 @@ export class ProfileComponent implements OnInit {
       //this.commonService.setItem('currentUser', this.user);
       this.store.dispatch(signin({user: this.user}));
     }
-     if(this.user.image){
+    //  if(this.user.image){
       this.user.imageURL = this.userService.profilePic(this.user.image);
-     }
+    //  }
    
      
      this.postFlag=false;
@@ -161,9 +180,9 @@ export class ProfileComponent implements OnInit {
             .subscribe(response => {console.log(response);
                 let user = JSON.parse(JSON.stringify(response));
                 this.user.image = user.image;
-                if(this.user.image){
+                // if(this.user.image){
                   this.user.imageURL = this.userService.profilePic(this.user.image);
-                 }
+                //  }
                 if(this.currentUser.userid==this.user.userid){
                   //this.commonService.setItem('currentUser', this.user);
                   this.store.dispatch(signin({user: this.user}));

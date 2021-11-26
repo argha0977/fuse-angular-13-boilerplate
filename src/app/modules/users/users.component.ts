@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angula
 import { MatDialog } from '@angular/material/dialog';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
+import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AdduserformComponent } from './adduserform/adduserform.component';
@@ -17,9 +18,10 @@ export class UsersComponent implements OnInit {
   drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
     dialogRef: any;
-
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
-  constructor(private _fuseMediaWatcherService: FuseMediaWatcherService, private _matDialog: MatDialog, private _changeDetectorRef: ChangeDetectorRef,) { }
+  
+    private _unsubscribeAll: Subject<any> = new Subject<any>(); 
+  constructor(private store: Store<{ user: any }>,  
+    private _fuseMediaWatcherService: FuseMediaWatcherService, private _matDialog: MatDialog, private _changeDetectorRef: ChangeDetectorRef,) { }
 
   ngOnInit(): void {
  // Subscribe to media changes
@@ -39,6 +41,7 @@ export class UsersComponent implements OnInit {
          this.drawerOpened = false;
      }
  });
+//  this.getStoreUserid();
   }
 
    /**
@@ -50,24 +53,9 @@ export class UsersComponent implements OnInit {
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
     }
+
     createUsers() :void {
-      // this.dialogRef = this._matDialog.open(AdduserformComponent, {
-        
-      //   panelClass: 'contact-form-dialog',
-      //   data: {
-      //     action: 'new'
-      //   }
-        
-      // });
-  
-      // this.dialogRef.afterClosed()
-      //   .subscribe((response: any) => {
-      //     if (!response) {
-      //       return;
-      //     }
-  
-      //     //this._contactsService.updateContact(response.getRawValue());
-      //   });
+     
       const dialogRef = this._matDialog.open(AdduserformComponent,{
         data: {
         action: 'new'

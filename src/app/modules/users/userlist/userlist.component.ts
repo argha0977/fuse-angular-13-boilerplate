@@ -2,6 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, O
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { FuseConfirmationDialogComponent } from '@fuse/services/confirmation/dialog/dialog.component';
@@ -32,8 +33,9 @@ export class UserlistComponent implements OnInit{
     image:''
 };
    userList=[];
-  configForm: FormGroup;
-
+   profileData='';
+   configForm: FormGroup;
+   profileFlag=false;
    dialogRef: any;
    confirmDialogRef: MatDialogRef<FuseConfirmationDialogComponent>;
   constructor(
@@ -42,7 +44,8 @@ export class UserlistComponent implements OnInit{
     private userService: UserService,
     private _matDialog: MatDialog,
     private _formBuilder: FormBuilder,
-    private _fuseConfirmationService: FuseConfirmationService
+    private _fuseConfirmationService: FuseConfirmationService,
+    private router: Router,
     )
   {
   }
@@ -168,4 +171,9 @@ export class UserlistComponent implements OnInit{
            this.commonService.showSnakBarMessage(respError, 'error', 2000);
        })
   }
+  go2Profile(list:any,rindex:Number){
+    // this.router.navigateByUrl('profile',list._id);
+    this.router.navigate(['/profile','users',list._id]);
+  }
+ 
 }

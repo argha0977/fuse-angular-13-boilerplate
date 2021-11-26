@@ -1,5 +1,5 @@
 
-<div class="table-users" *ngIf="userList.length>0">
+<div class="table-users" *ngIf="userList.length>0" >
 
     
     <table cellspacing="0">
@@ -12,20 +12,20 @@
           <th width="60">Delete</th>
        </tr>
  
-       <tr  *ngFor="let list of userList; let rindex=index">
-          <td><img [src]="list.imageUrl"  /></td>
-          <td>{{list.firstname}} {{list.lastname}}</td>
-          <td>{{list.email}}</td>
-          <td>{{list.mobile}}</td>
-          <td (click)="edtiUSer(rindex,list)"><mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon></td>
-          <td (click)="deleteUser(rindex,list)"><mat-icon [svgIcon]="'heroicons_outline:trash'" ></mat-icon></td>
-       </tr>
- 
-     
-       
+       <tr  *ngFor="let list of userList; let rindex=index" >
+          <td (click)="go2Profile(list,rindex)" style= "cursor:pointer ;"><img [src]="list.imageUrl"  /></td>
+          <td (click)="go2Profile(list,rindex)" style= "cursor:pointer ;">{{list.firstname}} {{list.lastname}}</td>
+          <td (click)="go2Profile(list,rindex)" style= "cursor:pointer ;">{{list.email}}</td>
+          <td (click)="go2Profile(list,rindex)" style= "cursor:pointer ;">{{list.mobile}}</td>
+          <td (click)="edtiUSer(rindex,list)" style= "cursor:pointer ;"><mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon></td>
+          <td (click)="deleteUser(rindex,list)" style= "cursor:pointer ;"><mat-icon [svgIcon]="'heroicons_outline:trash'" ></mat-icon></td>
+       </tr> 
     </table>
+   
  </div>
  <div  *ngIf="userList.length==0">
 
    <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center"><mat-icon svgIcon="heroicons_solid:users" ></mat-icon> There are no user!</div>
  </div>
+
+ 

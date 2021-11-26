@@ -27,19 +27,24 @@
     </div>
 
     <!-- Separator -->
-    <!-- <div class="hidden lg:flex h-8 mx-8 border-l-2"></div> -->
+    <div class="hidden lg:flex h-8 mx-8 border-l-2" *ngIf="userFlag"></div>
 
     <!-- Stats -->
-    <!-- <div class="flex items-center mt-6 lg:mt-0 space-x-6">
-        <div class="flex flex-col items-center">
-            <span class="font-bold">200k</span>
-            <span class="text-sm font-medium text-secondary">FOLLOWERS</span>
-        </div>
-        <div class="flex flex-col items-center">
+    <div class="flex items-center mt-6 lg:mt-0 space-x-6" *ngIf="userFlag">
+        <button 
+        class="px-3 mr-1 hidden sm:inline-flex"
+        mat-button
+        (click)="back2list()">
+        <mat-icon 
+            class="icon-size-5 mr-2"
+            [svgIcon]="'heroicons_solid:view-list'"></mat-icon>
+        <span>Back To List</span>
+    </button>
+        <!-- <div class="flex flex-col items-center">
             <span class="font-bold">1.2k</span>
             <span class="text-sm font-medium text-secondary">FOLLOWING</span>
-        </div>
-    </div> -->
+        </div> -->
+    </div>
 
     <!-- Menu -->
     <!-- <div class="flex items-center mt-8 mb-4 lg:m-0 lg:ml-auto space-x-6">
@@ -77,7 +82,7 @@
 
         <!-- About me -->
         <fuse-card class="flex flex-col max-w-80 w-full p-8">
-            <div class="text-2xl font-semibold leading-tight">{{About}}</div>
+            <div class="text-2xl font-semibold leading-tight"> {{About}}</div>
             <!-- <div class="mt-4">
                 I’m a friendly kitchen assistant who suffers from a severe phobia of buttons.
                 <br><br>
