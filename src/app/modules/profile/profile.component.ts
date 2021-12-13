@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { CommonService } from 'app/services/common.service';
 import { UserService } from 'app/services/user.service';
-import { signin } from 'app/store/actions/user.actions';
+import { signin, updateUser } from 'app/store/actions/user.actions';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -130,9 +130,11 @@ export class ProfileComponent implements OnInit {
     this.userService.update(obj)
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(response => {
+        let user = JSON.parse(JSON.stringify(response));
         this.user = JSON.parse(JSON.stringify(response));
+        this.store.dispatch(updateUser({user: user}));
         if (this.currentUser.userid == this.user.userid) {
-          this.currentUser .email = this.aboutEdit.email;
+          this.currentUser.email = this.aboutEdit.email;
           this.currentUser.mobile = this.aboutEdit.mobile;
           this.commonService.setItem('currentUser', this.currentUser);
           this.store.dispatch(signin({ user: this.currentUser }));
@@ -164,6 +166,8 @@ export class ProfileComponent implements OnInit {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(response => {
         this.user = JSON.parse(JSON.stringify(response));
+        let user = JSON.parse(JSON.stringify(response));
+        this.store.dispatch(updateUser({ user: user }));
         if (this.currentUser.userid == this.user.userid) {
           this.currentUser['firstname'] = this.postEdit.firstname;
           this.currentUser['lastname'] = this.postEdit.lastname;
@@ -194,6 +198,7 @@ export class ProfileComponent implements OnInit {
         .subscribe(response => {
           let user = JSON.parse(JSON.stringify(response));
           this.user.image = user.image;
+          this.store.dispatch(updateUser({ user: user }));
           this.user.imageURL = this.userService.profilePic(this.user.image);
           if (this.currentUser.userid == this.user.userid) {
             this.currentUser.image = user.image;
