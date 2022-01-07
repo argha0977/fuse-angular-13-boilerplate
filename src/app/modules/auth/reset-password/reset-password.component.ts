@@ -132,6 +132,7 @@ export class AuthResetPasswordComponent implements OnInit
                     // else {
                         //Redirect to Dashboard
                         const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
+                    console.log(redirectURL);
                         this._router.navigateByUrl(redirectURL);
                     // }
                 },
