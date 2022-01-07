@@ -66,7 +66,11 @@ export class UserService {
         'Authorization': this.authorization
       })
     };
-    return this.http.get(this.baseUrl + '/user/show/' + id, httpOptions);
+    return this.http.get(this.baseUrl + '/user/show/' + id, httpOptions)
+    .pipe(
+      retry(1),
+      catchError(this.errorHandler)
+    )
   }
 
   showUserOfOrganization(ocode: string, userid: string) {
@@ -76,7 +80,11 @@ export class UserService {
         'Authorization': this.authorization
       })
     };
-    return this.http.get(this.baseUrl + '/user/showUser/' + ocode + '/' + userid, httpOptions);
+    return this.http.get(this.baseUrl + '/user/showUser/' + ocode + '/' + userid, httpOptions)
+    .pipe(
+      retry(1),
+      catchError(this.errorHandler)
+    )
   }
 
   showUser(userid: string) {
@@ -86,7 +94,11 @@ export class UserService {
         'Authorization': this.authorization
       })
     };
-    return this.http.get(this.baseUrl + '/user/showUser/' + userid, httpOptions);
+    return this.http.get(this.baseUrl + '/user/showUser/' + userid, httpOptions)
+    .pipe(
+      retry(1),
+      catchError(this.errorHandler)
+    )
   }
 
   search(user: any) {
@@ -201,7 +213,11 @@ export class UserService {
         'user-token': user.usertoken
       })
     };
-    return this.http.get(this.baseUrl + '/user/verifyToken', httpOptions);
+    return this.http.get(this.baseUrl + '/user/verifyToken', httpOptions)
+    .pipe(
+      retry(1),
+      catchError(this.errorHandler)
+    )
   }
 
   errorHandler(error: Response) {

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CommonService } from 'app/services/common.service';
 import { UserService } from 'app/services/user.service';
 import { setUsers } from 'app/store/actions/user.actions';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-usersidebar',
@@ -12,6 +13,7 @@ import { Subject } from 'rxjs';
 })
 export class UsersidebarComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
+  @Output() updateParent1 = new EventEmitter<boolean>();
   user: any;
   roles = [];
   criteria={role:''};
@@ -53,6 +55,7 @@ onFilter(){
   let criteria = JSON.parse(JSON.stringify(this.criteria));
   criteria.ocode = this.user.ocode;
   this.userService.search(criteria)
+  .pipe(takeUntil(this._unsubscribeAll))
   .subscribe(response => {
       console.log(response)
       let data= JSON.parse(JSON.stringify(response));
@@ -61,7 +64,9 @@ onFilter(){
           this.userList.push(data[i]);
         } 
       }
+
       this.store.dispatch(setUsers({users: this.userList}));
+      this.updateParent1.emit(false); 
     },
     respError => {
         // this.loading = false;

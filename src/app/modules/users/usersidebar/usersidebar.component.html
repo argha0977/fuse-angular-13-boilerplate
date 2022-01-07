@@ -19,6 +19,7 @@
         <!-- Role -->
         <div>
             <mat-form-field class="flex-auto gt-xs:pr-3 w-full">
+                <mat-label>Select Role</mat-label>
                 <select matNativeControl [placeholder]="'Select Role'" name="role" [(ngModel)]="criteria.role">
                     <option *ngFor="let role of roles" [value]="role.name">
                     {{role.name}}</option>

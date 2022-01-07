@@ -22,7 +22,7 @@
                         <span class="ml-1 text-secondary">Overview</span>
                     </div>
                 </div> -->
-                <div class="flex sm:hidden">
+                <!-- <div class="flex sm:hidden">
                     <a
                         class="inline-flex items-center -ml-1.5 text-secondary font-medium"
                         [routerLink]="'./..'">
@@ -31,7 +31,7 @@
                             [svgIcon]="'heroicons_solid:chevron-left'"></mat-icon>
                         <span class="ml-1">Back</span>
                     </a>
-                </div>
+                </div> -->
             </div>
             <!-- Title -->
             <div class="mt-2">
@@ -65,16 +65,16 @@
 
     <mat-drawer-container class="flex-auto h-full">
 
-       <!-- Drawer -->
+       <!-- Drawer  class="w-60 dark:bg-gray-900" -->
        <mat-drawer
-       class="w-72 dark:bg-gray-900"
+       class=" md:w-160 dark:bg-gray-900"
        [autoFocus]="false"
        [mode]="drawerMode"
-       [opened]="false"
+       [opened]="drawerOpened"
        [position]="'end'"
        #matDrawer>
        <!-- Demo sidebar -->
-            <app-usersidebar></app-usersidebar>
+            <app-usersidebar (updateParent1)="bck2parentSide($event)"></app-usersidebar>
         </mat-drawer>
       
 
@@ -86,7 +86,7 @@
 
                 <!-- CONTENT GOES HERE -->
                 <!-- <div class="h-400 min-h-400 max-h-400 border-2 border-dashed border-gray-300 rounded-2xl"> -->
-                    <app-userlist></app-userlist>
+                    <app-userlist ></app-userlist>
                 <!-- </div> -->
 
             </div>
