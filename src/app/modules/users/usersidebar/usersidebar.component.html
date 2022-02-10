@@ -1,4 +1,4 @@
-<div class="flex flex-auto">
+<div class="flex flex-auto" *ngIf="searchFlag">
     <form class="flex flex-col flex-auto p-6 pt-10 sm:p-8 sm:pt-10 overflow-y-auto">
         <!-- Header -->
         <div class="flex items-center justify-between -mt-3 -ml-4">
@@ -35,6 +35,7 @@
     </form>
 </div>
 
+<app-adduserform *ngIf="addFlag || editFlag"  (updateParent2)="bck2parentAdd($event)"></app-adduserform>
 <!-- <div fxLayout="row" fxLayoutAlign="start center" > <h2 style="color:blue;font-weight:800;margin-bottom: 20px; margin-top:20px;margin-left:10px;">Filter User</h2> </div>
 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" style="margin-bottom: 20px; margin-top:20px;margin-left:10px;">     
     <mat-form-field class="side-gap" appearance="outline" fxFlex="100">

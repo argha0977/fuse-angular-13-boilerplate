@@ -7,6 +7,8 @@ import * as UserActions from "../actions/user.actions";
 export interface State {
     user: any,
     users: any,
+    action:any,
+    data:any,
 
 }
 
@@ -16,6 +18,8 @@ export interface State {
 export const initialState: State = {
     user: undefined,
     users: [],
+    action:'',
+    data:undefined,
 
 };
 
@@ -34,7 +38,9 @@ const userReducer = createReducer(
     on(UserActions.deleteUser, (state, { user }) => ({ ...state, users: state.users.filter(item => item._id !== user._id) })),
     on(UserActions.setUsers, (state, { users }) => ({ ...state, users: users })),
     on(UserActions.signin, (state, { user }) => ({ ...state, user: user })),
-    on(UserActions.reset, state => ({ ...state, user: undefined, users: [] })),
+    on(UserActions.setActionUser, (state, { action }) => ({ ...state, action: action })),
+    on(UserActions.setListUserData, (state, { data }) => ({ ...state, data: data })),
+    on(UserActions.reset, state => ({ ...state, user: undefined, users: [] , action:''})),
 
 );
 

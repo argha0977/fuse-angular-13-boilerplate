@@ -4,6 +4,7 @@ import { MatDrawer } from '@angular/material/sidenav';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { Store } from '@ngrx/store';
+import { setActionUser, setListUserData } from 'app/store/actions/user.actions';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AdduserformComponent } from './adduserform/adduserform.component';
@@ -27,23 +28,35 @@ export class UsersComponent implements OnInit {
 
     ngOnInit(): void {
       // Subscribe to media changes
-      this._fuseMediaWatcherService.onMediaChange$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(({matchingAliases}) => {
-     
-          // Set the drawerMode and drawerOpened if
-          if ( matchingAliases.includes('lg') )
-          {
-            this.drawerMode = 'side';
-            this.drawerOpened = false;
-          }
-          else
-          {
-              this.drawerMode = 'over';
-              this.drawerOpened = false;
-          }
-      });
-     //  this.getStoreUserid();
+     this._fuseMediaWatcherService.onMediaChange$
+     .pipe(takeUntil(this._unsubscribeAll))
+     .subscribe(({matchingAliases}) => {
+    
+         // Set the drawerMode and drawerOpened if
+         if ( matchingAliases.includes('lg') )
+         {
+           this.drawerMode = 'side';
+           this.drawerOpened = false;
+         }
+         else
+         {
+             this.drawerMode = 'over';
+             this.drawerOpened = false;
+         }
+     });
+      //Subscribe to MatDrawer opened change
+      this.matDrawer.openedChange.subscribe((opened) => { //
+       if ( !opened )
+       {
+           this.store.dispatch(setActionUser({action: ''}));
+           this.store.dispatch(setListUserData({data:undefined}));
+           this.drawerOpened = false;
+           // Mark for check
+           this._changeDetectorRef.markForCheck();
+       }
+   });
+    //  this.getStoreUserid();
+      
        }
 
   /**
@@ -54,28 +67,45 @@ export class UsersComponent implements OnInit {
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
   }
-
-  createUsers(): void {
-
-    const dialogRef = this._matDialog.open(AdduserformComponent, {
-      data: {
-        action: 'new'
-      }
-    }
-    );
-
-    dialogRef.afterClosed()
-      .subscribe((result) => {
-        console.log('Compose dialog was closed!');
-      });
-
-  }
+  
   bck2parentSide(value:Boolean){
     console.log(value)
            if(value==false){
+            this.store.dispatch(setActionUser({action: 'add'}));
            this.drawerOpened = false;
            this.matDrawer.close();
          }
   }
+  bck2parent(value:Boolean){
+    console.log(value)
+           if(value==false){
+            this.store.dispatch(setActionUser({action: 'edit'}));
+            // this.action='edit';
+           this.drawerOpened = true;
+         
+           
+         }
+  }
+  addnew(){
+    // console.log('add');
+    
+    // if(this.drawerOpened == true){
+    //   console.log('add true');
+    // }
+    // else if(this.drawerOpened == false){
+    //   console.log('add false');
+    //
 
+    // }
+    this.matDrawer.toggle();
+    this.store.dispatch(setActionUser({action: 'add'}));
+    // this.action='add';
+  }
+  search(){
+    // console.log('search');
+
+    this.matDrawer.toggle();
+    // this.action='search';
+    this.store.dispatch(setActionUser({action: 'search'}));
+  }
 }

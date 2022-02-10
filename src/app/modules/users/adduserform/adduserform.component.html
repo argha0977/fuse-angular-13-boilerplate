@@ -1,82 +1,82 @@
-<div class="flex flex-col max-w-240 md:min-w-120 -m-6  overflow-y-auto ">
-     <!-- Header -->
-     <div class="flex flex-0 items-center justify-between h-12 pr-3 sm:pr-3 pl-6 sm:pl-6 bg-primary text-on-primary">
-        <div class="text-lg font-medium">{{dialogTitle}}</div>
-        <button
-            mat-icon-button
-            (click)="matDialogRef.close();"
-            [tabIndex]="-1">
-            <mat-icon
-                class="text-current"
-                [svgIcon]="'heroicons_outline:x'"></mat-icon>
+<div class="flex flex-col flex-auto p-6 pt-10 sm:p-8 sm:pt-10 overflow-y-auto" *ngIf="addFlag || editFlag">
+       
+    <div class="flex items-center justify-between -mt-3 -ml-4">
+        <button class="pr-4 pl-3.5" mat-button  (click)="onAdd()" *ngIf="addFlag">
+        
+            <ng-container>
+                <div class="flex items-center justify-center">
+                    <mat-icon [svgIcon]="'heroicons_solid:newspaper'"></mat-icon>
+                    <span class="ml-2 font-semibold">Add User</span>
+                </div>
+            </ng-container>
+        
+        </button>
+        <button class="pr-4 pl-3.5" mat-button  (click)="onUpdate()" *ngIf="editFlag">
+        
+            <ng-container>
+                <div class="flex items-center justify-center">
+                    <mat-icon [svgIcon]="'heroicons_solid:newspaper'"></mat-icon>
+                    <span class="ml-2 font-semibold">Edit User</span>
+                </div>
+            </ng-container>
+        
         </button>
     </div>
+    <mat-divider class="mt-6 mb-8"></mat-divider>
     <form
     class="flex flex-col flex-auto p-1 sm:p-1 overflow-y-auto "
     [formGroup]="contactForm">
-      <!-- firstname overflow-hidden-->
-      <mat-form-field>
+  
+      <mat-form-field class="flex-auto gt-xs:pr-3 w-full">
         <mat-label>First Name</mat-label>
         <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-        <input name="firstname" formControlName="firstname" [(ngModel)]="user.firstname" matInput required>
+        <input name="firstname" formControlName="firstname"  [(ngModel)]="user.firstname" matInput required>
         <mat-error>First Name is required!</mat-error>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field class="flex-auto gt-xs:pr-3 w-full">
         <mat-label>Last Name</mat-label>
         <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-        <input name="lastname" formControlName="lastname" [(ngModel)]="user.lastname" matInput required>
+        <input name="lastname" formControlName="lastname"  [(ngModel)]="user.lastname" matInput required>
         <mat-error>Last Name is required!</mat-error>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field class="flex-auto gt-xs:pr-3 w-full">
         <mat-label>Mobile number</mat-label>
         <mat-icon matSuffix class="secondary-text">mobile_friendly</mat-icon>
-        <input name="mobile" formControlName="mobile" [(ngModel)]="user.mobile" matInput required pattern="(^\d{10}$)">
+        <input name="mobile" formControlName="mobile"  [(ngModel)]="user.mobile" matInput required pattern="(^\d{10}$)">
         <!-- <mat-error *ngIf="!mobile.errors?.pattern">Mobile No is required!</mat-error> -->
         <mat-error>Mobile No is not incorrect format!</mat-error>
     </mat-form-field>
-    <mat-form-field *ngIf="!updateFlag">
+    <mat-form-field *ngIf="addFlag" class="flex-auto gt-xs:pr-3 w-full">
         <mat-label>Password</mat-label>
         <mat-icon matSuffix class="secondary-text" (click)= "visible= !visible">{{!visible ? 'visibility' : 'visibility_off'}}</mat-icon>
-        <input [type]="!visible ? 'password' : 'text'" formControlName="password" [(ngModel)]="user.password" matInput maxlength="10" required>
+        <input [type]="!visible ? 'password' : 'text'" formControlName="password"  [(ngModel)]="user.password" matInput maxlength="10" required>
         <mat-error >Password is required!</mat-error>
         
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field class="flex-auto gt-xs:pr-3 w-full">
         <mat-label>Email</mat-label>
         <mat-icon matSuffix class="secondary-text">email</mat-icon>
-        <input name="email" formControlName="email" [(ngModel)]="user.email" matInput  type="email" pattern="[A-Za-z0-9._%+-]{1,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})">
+        <input name="email" [(ngModel)]="user.email" matInput formControlName="email"  type="email" pattern="[A-Za-z0-9._%+-]{1,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})">
         <mat-error>Email is not incorrect format!</mat-error>
     </mat-form-field>
-    <mat-form-field > 
+    <mat-form-field class="flex-auto gt-xs:pr-3 w-full"> 
         <mat-label>Role</mat-label>
-                    <mat-select name="role" formControlName="role" [(ngModel)]="user.role">
+                    <mat-select name="role" [(ngModel)]="user.role" formControlName="role" >
                         <mat-option *ngFor="let role of roles" [value]="role.name">
                             {{role.name}}
                         </mat-option>
                     </mat-select>
                     <mat-icon matSuffix class="secondary-text">person_outline</mat-icon>
     </mat-form-field>
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-1 sm:mt-1">
-        <div class="-ml-2">
-
-        </div>
-        <div class="flex items-center mt-2 sm:mt-0">
-        <button *ngIf="action !== 'edit'"
-        class="order-first sm:order-last"
-        mat-flat-button
-        [color]="'primary'"
-        (click)="onSave()">
-        ADD
-       </button>
-       <button *ngIf="action === 'edit'"
-        class="order-first sm:order-last"
-        mat-flat-button
-        [color]="'primary'"
-        (click)="onSave()">
-        UPDATE
-       </button>
-        </div>
-    </div>
-    </form>
+    <div fxLayout="column" fxLayoutAlign="end center" style="margin-bottom: 20px; margin-top:20px;margin-left:10px;" >
+        <button mat-raised-button color="primary" (click)="onAdd()" class="submit-button" aria-label="Filter" *ngIf="addFlag">
+            ADD
+        </button>
+        <button mat-raised-button color="primary" (click)="onUpdate()" class="submit-button" aria-label="Filter" *ngIf="editFlag">
+            Update
+        </button>
+    </div> 
+</form>
+<!--  -->
 
 </div>

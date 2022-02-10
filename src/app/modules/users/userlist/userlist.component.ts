@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -9,7 +9,7 @@ import { FuseConfirmationDialogComponent } from '@fuse/services/confirmation/dia
 import { Store } from '@ngrx/store';
 import { CommonService } from 'app/services/common.service';
 import { UserService } from 'app/services/user.service';
-import { deleteUser, signin } from 'app/store/actions/user.actions';
+import { deleteUser, setListUserData, signin } from 'app/store/actions/user.actions';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AdduserformComponent } from '../adduserform/adduserform.component';
@@ -25,6 +25,8 @@ export class UserlistComponent implements OnInit {
 
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
+  @Output() updateParent = new EventEmitter<boolean>();
+
   user = {
     firstname: '',
     lastname: '',
@@ -92,24 +94,28 @@ export class UserlistComponent implements OnInit {
     console.log(user);
     if (user) this.store.dispatch(signin({ user: user }));
   }
-  edtiUSer(index: number, user: any): void {
-    this.dialogRef = this._matDialog.open(AdduserformComponent, {
-      panelClass: 'contact-form-dialog',
-      data: {
-        action: 'edit',
-        user: JSON.parse(JSON.stringify(user))
-      }
-    });
+  // edtiUSer(index: number, user: any): void {
+  //   this.dialogRef = this._matDialog.open(AdduserformComponent, {
+  //     panelClass: 'contact-form-dialog',
+  //     data: {
+  //       action: 'edit',
+  //       user: JSON.parse(JSON.stringify(user))
+  //     }
+  //   });
 
-    this.dialogRef.afterClosed()
-      .subscribe((response: any) => {
-        if (!response) {
-          return;
-        }
+  //   this.dialogRef.afterClosed()
+  //     .subscribe((response: any) => {
+  //       if (!response) {
+  //         return;
+  //       }
 
-        //this._contactsService.updateContact(response.getRawValue());
-      });
+  //       //this._contactsService.updateContact(response.getRawValue());
+  //     });
 
+  // }
+  edtiUSer(index: number, data: any){
+    this.store.dispatch(setListUserData({data: data}));
+    this.updateParent.emit(false);
   }
 
   configureDeleteConfirmation() {
