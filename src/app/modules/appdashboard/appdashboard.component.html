@@ -1,1 +1,197 @@
-<p>appdashboard works!</p>
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
+    
+    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+    <div class="flex-1 min-w-0">
+        <!-- Breadcrumbs -->
+        <div>
+            <!-- <div class="hidden sm:flex flex-wrap items-center font-medium">
+                <div>
+                    <a class="whitespace-nowrap text-primary-500">Projects</a>
+                </div>
+                <div class="flex items-center ml-1 whitespace-nowrap">
+                    <mat-icon
+                        class="icon-size-5 text-secondary"
+                        [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
+                    <a class="ml-1 text-primary-500">Weekend Project</a>
+                </div>
+                <div class="flex items-center ml-1 whitespace-nowrap">
+                    <mat-icon
+                        class="icon-size-5 text-secondary"
+                        [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
+                    <span class="ml-1 text-secondary">Overview</span>
+                </div>
+            </div> -->
+            <!-- <div class="flex sm:hidden">
+                <a
+                    class="inline-flex items-center -ml-1.5 text-secondary font-medium"
+                    [routerLink]="'./..'">
+                    <mat-icon
+                        class="icon-size-5 text-secondary"
+                        [svgIcon]="'heroicons_solid:chevron-left'"></mat-icon>
+                    <span class="ml-1">Back</span>
+                </a>
+            </div> -->
+        </div>
+        <!-- Title -->
+        <div class="mt-2">
+            <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+             App Dashboard
+            </h2>
+            <!-- <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4"> -->
+               
+            <!-- </div> -->
+           
+        </div>
+      
+    </div>
+    </div>
+    <mat-drawer-container
+        class="flex-auto h-full"
+        [hasBackdrop]="false">
+
+        <!-- Drawer -->
+        <mat-drawer
+            class="w-full sm:w-100 lg:border-r lg:shadow-none dark:bg-gray-900"
+            [autoFocus]="false"
+            [(opened)]="drawerOpened"
+            #drawer>
+
+            <!-- New chat -->
+            <!-- <ng-container *ngIf="drawerComponent === 'new-chat'">
+                <chat-new-chat [drawer]="drawer"></chat-new-chat>
+            </ng-container> -->
+
+            <!-- Profile -->
+            <!-- <ng-container *ngIf="drawerComponent === 'profile'">
+                <chat-profile [drawer]="drawer"></chat-profile>
+            </ng-container> -->
+
+        </mat-drawer>
+
+        <!-- Drawer content -->
+        <mat-drawer-content class="flex overflow-hidden">
+
+            <!-- Chats list -->
+            <ng-container >
+                <div class="relative flex flex-auto flex-col w-full min-w-0 lg:min-w-100 lg:max-w-100 bg-card dark:bg-transparent">
+               
+                    <!-- Header -->
+                    <div class="flex flex-col flex-0 py-4 px-8 border-b bg-gray-50 dark:bg-transparent">
+                        <span style="color:#69c3d8 ;"> Filter User</span>
+                           
+                   </div> 
+                       
+
+                    <!-- Chats -->
+                    <div class="flex-auto overflow-y-auto">
+                        <mat-form-field class="flex-auto gt-xs:pr-3 halfwidth">
+                            <mat-label>Country</mat-label>
+                            <mat-select [(ngModel)]="dashboard.country" (selectionChange)="getState(dashboard.country)">
+                                <!-- <mat-option value="null" disabled selected hidden>---Select Status ---</mat-option> -->
+                                <mat-option *ngFor="let country of countries" [value]="country"
+                                
+                                >{{country}}</mat-option>
+                            </mat-select>
+                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'"></mat-icon>
+                        </mat-form-field> 
+                             
+                            <mat-form-field class="flex-auto gt-xs:pr-3 halfwidth">
+                                <mat-label>States</mat-label>
+                                <mat-select [(ngModel)]="dashboard.state" (selectionChange)="getCity(dashboard.country,dashboard.state)">
+                                    <!-- <mat-option value="null" disabled selected hidden>---Select Status ---</mat-option> -->
+                                    <mat-option *ngFor="let state of states" [value]="state"
+                                    
+                                    >{{state}}</mat-option>
+                                </mat-select>
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'"></mat-icon>
+                            </mat-form-field>            
+                          
+                            <mat-form-field class="flex-auto gt-xs:pr-3 halfwidth">
+                                <mat-label>City</mat-label>
+                                <mat-select [(ngModel)]="dashboard.city">
+                                    <!-- <mat-option value="null" disabled selected hidden>---Select Status ---</mat-option> -->
+                                    <mat-option *ngFor="let city of cities" [value]="city"
+                                    
+                                    >{{city}}</mat-option>
+                                </mat-select>
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'"></mat-icon>
+                            </mat-form-field>            
+                       
+                            <mat-form-field class="flex-auto gt-xs:pr-3 halfwidth">
+                                <mat-label>Name</mat-label>
+                                <input matInput [(ngModel)]="dashboard.oname" >
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'"></mat-icon>
+                            </mat-form-field>
+                        
+                            <mat-form-field class="flex-auto gt-xs:pr-3 halfwidth">
+                                <mat-label>Code</mat-label>
+                                <input matInput  [(ngModel)]="dashboard.ocode">
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'"></mat-icon>
+                            </mat-form-field>
+                    
+                            <div fxLayout="column" fxLayoutAlign="end center" style="margin-bottom: 20px; margin-top:20px;margin-left:10px;">
+                                <button mat-raised-button color="primary" (click)="onFilter()" class="submit-button" aria-label="Filter">
+                                    Filter
+                                </button>
+                            </div>
+                    </div>
+
+                </div>
+
+            </ng-container>
+
+            <!-- No chats template -->
+            <!-- <ng-template #noChats>
+                <div class="flex flex-auto flex-col items-center justify-center h-full">
+                    <mat-icon
+                        class="icon-size-24"
+                        [svgIcon]="'iconsmind:speach_bubble'"></mat-icon>
+                    <div class="mt-4 text-2xl font-semibold tracking-tight text-secondary">No chats</div>
+                </div>
+            </ng-template> -->
+
+            <!-- Conversation -->
+            <ng-container >
+               
+                <div class="flex-auto  overflow-y-auto border-l" *ngIf="userList.length>0" >
+                    <table cellspacing="0">
+                        <tr>
+                            <th >Code</th>
+                           <th >Name</th>
+                           <th >Country</th>
+                           <th >Addedon</th>
+                           <!-- <th >Edit</th>
+                           <th >Delete</th> -->
+                           <!-- <th width="230">Name</th>
+                           <th width="230">Email</th>
+                           <th width="230">Phone</th>
+                           <th width="150">Edit</th>
+                           <th width="60">Delete</th> -->
+                        </tr>
+                  
+                        <tr  *ngFor="let list of userList; let rindex=index" >
+                         
+                           <td  style= "cursor:pointer ;">{{list.ocode}}</td>
+                           <td  style= "cursor:pointer ;">{{list.oname}}</td>
+                           <td  style= "cursor:pointer ;">{{list.country}}</td>
+                           <td  style= "cursor:pointer ;">{{list.addedon | date: "dd.MM.yyyy"}}</td>
+                           <!-- (click)="go2Profile(list,rindex)"<td (click)="edtiUSer(rindex,list)" style= "cursor:pointer ;"><mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon></td>
+                           <td (click)="deleteUser(rindex,list)" style= "cursor:pointer ;"><mat-icon [svgIcon]="'heroicons_outline:trash'" ></mat-icon></td> -->
+                        </tr> 
+                     </table>
+
+                </div>
+                <div class="flex flex-auto flex-col items-center justify-center h-full" *ngIf="userList.length==0">
+                    <mat-icon
+                        class="icon-size-24"
+                        [svgIcon]="'iconsmind:administrator'"></mat-icon>
+                    <div class="mt-4 text-2xl font-semibold tracking-tight text-secondary">There are no user!</div>
+                </div>
+            </ng-container>
+
+        </mat-drawer-content>
+
+    </mat-drawer-container>
+
+</div>
+

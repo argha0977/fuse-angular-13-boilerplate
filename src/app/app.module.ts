@@ -14,8 +14,8 @@ import { LayoutModule } from 'app/layout/layout.module';
 import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { StoreModule } from "@ngrx/store";
-import * as UserReducer from "./store/reducers/user.reducer";
-
+import * as UserReducer from "./store/reducers/user.reducers";
+import * as OrganizationReducer from "./store/reducers/organization.reducers";
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -46,7 +46,9 @@ const routerConfig: ExtraOptions = {
         // 3rd party modules that require global configuration via forRoot
         MarkdownModule.forRoot({}),
         //NGRX Store configuration via forRoot
-        StoreModule.forRoot({ user: UserReducer.reducer })
+        StoreModule.forRoot({ user: UserReducer.reducer ,
+            organization: OrganizationReducer.reducer ,
+        })
     ],
     bootstrap   : [
         AppComponent

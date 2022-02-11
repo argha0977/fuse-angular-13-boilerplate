@@ -91,7 +91,13 @@ export const appRoutes: Route[] = [
                 {path: 'project', loadChildren: () => import('app/modules/admin/dashboards/project/project.module').then(m => m.ProjectModule)},
                 {path: 'analytics', loadChildren: () => import('app/modules/admin/dashboards/analytics/analytics.module').then(m => m.AnalyticsModule)},
             ]},
-
+           // appdashboard
+          {
+           path: '',
+          children: [
+             { path: 'appdashboard', loadChildren: () => import('app/modules/appdashboard/appdashboard.module').then(m => m.AppdashboardModule) },
+           ]
+        },
             // Users routes
             {
                 path: '',
@@ -157,7 +163,7 @@ export const appRoutes: Route[] = [
                     {path: 'single', loadChildren: () => import('app/modules/admin/pages/pricing/single/single.module').then(m => m.PricingSingleModule)},
                     {path: 'table', loadChildren: () => import('app/modules/admin/pages/pricing/table/table.module').then(m => m.PricingTableModule)}
                 ]}, */
-
+          
                 // Profile
                 {path: 'profile', loadChildren: () => import('app/modules/admin/pages/profile/profile.module').then(m => m.ProfileModule)},
 

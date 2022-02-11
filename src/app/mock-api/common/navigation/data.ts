@@ -33,6 +33,23 @@ export const defaultNavigation: FuseNavigationItem[] = [
         ]
     },
     {
+        id: 'appdashboard',
+        title: 'APP DASHBOARD',
+        subtitle: 'Appdashboard',
+        type: 'group',
+        icon: 'heroicons_outline:home',
+        children: [
+            {
+                id: 'settings.appdashboard',
+                title: 'Appdashboard',
+                type: 'basic',
+                icon: 'heroicons_outline:clipboard-check',
+                link: '/appdashboard'
+            }
+            
+        ]
+    },
+    {
         id: 'settings',
         title: 'Settings',
         subtitle: 'Settings',

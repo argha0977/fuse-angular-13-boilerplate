@@ -1,0 +1,31 @@
+// app-appdashboard {
+    // padding: 10px;
+    table {
+       font-family: arial, sans-serif;
+       border-collapse: collapse;
+       width: 100%;
+       
+     }
+     
+     td, th {
+       border: 1px solid #008ac9;
+       text-align: left;
+       padding: 8px;
+       // border-radius: 50%;
+     }
+     
+     tr:nth-child(even) {
+       background-color: #69c3d8;
+     }
+
+     .halfwidth{
+         padding-left: 5%;
+        width: 88%;
+    }
+    //  body {
+    //  img {
+    //       border-radius: 50%;
+    //       height: 60px;
+    //       width: 60px;
+    //    }
+    // }
