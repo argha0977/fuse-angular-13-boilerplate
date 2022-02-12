@@ -1,10 +1,10 @@
 [
     {
-        "name":"Organization Settings",
+        "name":"Settings",
         "default": true
     },
     {
-        "name": "Deal Management",
+        "name": "HR Management",
         "default": false
     },
     {
@@ -12,7 +12,7 @@
         "default": false
     },
     {
-        "name": "Location Tracking",
+        "name": "Sales Management",
         "default": false
     }
     

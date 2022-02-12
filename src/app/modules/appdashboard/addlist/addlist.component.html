@@ -1,0 +1,87 @@
+<div class="flex flex-col max-w-240 md:min-w-160 -m-6">
+
+    <!-- Header -->
+    <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">{{dialogTitle}}</div>
+        <button
+            mat-icon-button
+            (click)="matDialogRef.close()"
+           >
+            <mat-icon
+                class="text-current"
+                [svgIcon]="'heroicons_outline:x'"></mat-icon>
+        </button>
+    </div>
+
+     <!-- Compose form -->
+      <form  [formGroup]="vendorForm"
+      class="flex-auto  flex-auto p-6 sm:p-8 overflow-y-auto" >
+      <!-- class="flex flex-col flex-auto p-6 sm:p-8 overflow-y-auto  " -->
+     <mat-form-field class="flex-auto gt-xs:pr-3 w-full">
+        <mat-label>Name</mat-label>
+        <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+        <input name="oname" formControlName="oname" placeholder="Name" [(ngModel)]="vendors.oname" matInput required>
+        <mat-error> Name is required!</mat-error>
+    </mat-form-field>
+    <mat-form-field class="flex-auto gt-xs:pr-3 w-full">
+        <mat-label>Address</mat-label>
+        <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+        <textarea matInput name="address"  formControlName="address" placeholder="Enter your Address" 
+        [(ngModel)]="vendors.address"></textarea>     
+    </mat-form-field>
+       
+    <div fxLayout="row" fxLayoutAlign="space-between">
+        <mat-form-field class="fuse-mat-no-subscript flex-auto halfwidth">
+            <mat-label>Country</mat-label>
+            <mat-select formControlName="country" [(ngModel)]="vendors.country" (ngModelChange)="onSelect()" > 
+                <mat-option *ngFor="let country of countries" [value]="country.name">{{country.name}}</mat-option>
+            </mat-select>
+        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:newspaper'"></mat-icon>
+
+        </mat-form-field>
+        <mat-form-field class="fuse-mat-no-subscript flex-auto halfwidth ml-2 sm:ml-4">
+            <mat-label>State</mat-label>
+            <mat-select formControlName="state" [(ngModel)]="vendors.state" >
+                <mat-option *ngFor="let state of states" [value]="state.name">{{state.name}}</mat-option>
+            </mat-select>
+           <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:newspaper'"></mat-icon>
+    
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between">
+        <mat-form-field class="fuse-mat-no-subscript flex-auto halfwidth">
+            <mat-label>City</mat-label>
+            <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+            <input matInput formControlName="city" placeholder="City"[(ngModel)]="vendors.city">
+        </mat-form-field>
+        <mat-form-field class="fuse-mat-no-subscript flex-auto halfwidth  ml-2 sm:ml-4">
+            <mat-label>Pin</mat-label>
+            <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+            <input matInput formControlName="pin" placeholder="Pincode" [(ngModel)]="vendors.pin">
+        </mat-form-field>
+    </div>
+    <mat-form-field class="flex-auto gt-xs:pr-3 w-full">
+        <mat-label>Google Api Key</mat-label>
+        <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+        <textarea matInput formControlName="googleapikey" placeholder="Google Api Key" 
+        [(ngModel)]="vendors.googleapikey"></textarea>    
+    </mat-form-field>
+
+     <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-4 sm:mt-6">
+        <div class="-ml-2">
+            </div>
+     <div class="flex items-center mt-4 sm:mt-0">
+       
+        <!-- Send -->
+        <button
+            class="order-first sm:order-last"
+            mat-flat-button
+            [color]="'primary'"
+            (click)="onSave()">
+            Save
+        </button>
+    </div>
+     </div>
+    </form> 
+</div>
+

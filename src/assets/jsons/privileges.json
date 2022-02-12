@@ -1,47 +1,79 @@
 [
     {
-        "feature": "Organization Settings",
+        "feature": "Settings",
         "privilege": [
-            "App Dashboard",
-            "Dashboard",
-            "Setting",
-            "View Organization",
-            "Edit Organization",
-            "View User",
-            "Edit User",
-            "Delete User",
-            "View SMS Log",
-            "View User Log",
-            "View Role",
-            "Edit Role"
+          "View Organization",
+          "Edit Organization",
+          "Delete Organization",
+          "App Dashboard",
+          "Dashboard",
+          "View User",
+          "Edit User",
+          "Delete User",
+          "View User Log",
+          "TA Setting",
+          "View Workshift",
+          "Edit Workshift",
+          "Delete Workshift",
+          "View Office",
+          "Edit Office",
+          "Delete Office",
+          "View Role",
+          "Edit Role"
         ]
     },
     {
-        "feature": "Deal Management",
+        "feature": "Sales Management",
         "privilege": [
-            "View Deal",
-            "Add Deal",
-            "Edit Deal",
-            "Delete Deal",
-            "Edit Product",
-            "Delete Product"
+            "Sales Dashboard",
+            "Sales Home",
+           "View Product",
+           "Edit Product",
+           "Delete Product",
+           "Add Deal",
+           "Edit Deal",
+           "Delete Deal",
+           "View Deal",
+           "View Customer",
+           "Edit Customer",
+           "Delete Customer",
+           "View Contact Person",
+           "Edit Contact Person",
+           "Delete Contact Person",
+           "View Deal Stage",
+           "Edit Deal Stage"
         ]
     },
     {
         "feature": "Attendance Management",
         "privilege": [
-            "View Attendance",
-            "Mark Attendance",
-            "Edit Attendance",
-            "Delete Attendance"
+            "Daily Attendance Report",
+            "Monthly Attendance Report",
+            "TA Sheet",
+            "Daily Attendance",
+            "Location Tracking"
         ]
     },
     {
-        "feature": "Location Tracking",
+        "feature": "HR Management",
         "privilege": [
-            "Setting",
-            "View Location",
-            "Track Location"
+          "View Leave Setting",
+          "Edit Leave Setting",
+          "Add Leave Setting",
+          "Edit Leave Allocation",
+          "View Leave Allocation",
+          "View Leave Application",
+          "Edit Leave Application",
+          "View Salary Head",
+          "Edit Salary Head",
+          "Delete Salary Head",
+          "View Salary Allocation",
+          "Edit Salary Allocation",
+          "Delete Salary Allocation",
+          "Edit Monthly Salary",
+          "View Monthly Salary",
+          "View Monthly Salary Report"
+          
         ]
     }
 ]

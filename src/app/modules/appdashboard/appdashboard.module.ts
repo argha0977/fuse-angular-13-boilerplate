@@ -6,12 +6,16 @@ import { FuseCardModule } from '@fuse/components/card';
 import { RouterModule } from '@angular/router';
 import { FuseAlertModule } from '@fuse/components/alert';
 import { SharedModule } from 'app/shared/shared.module';
+import { AddlistComponent } from './addlist/addlist.component';
+import { AddfeatureComponent } from './addfeature/addfeature.component';
 
 
 
 @NgModule({
   declarations: [
-    AppdashboardComponent
+    AppdashboardComponent,
+    AddlistComponent,
+    AddfeatureComponent
   ],
   imports: [
     CommonModule,

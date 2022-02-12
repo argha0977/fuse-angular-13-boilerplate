@@ -109,6 +109,10 @@ export class CommonService {
    * ***********************************************************************************
    */
 
+   getCountries(): any {
+    return this.http.get(this.jsonUrl + '/country.json')
+      .pipe(map((response: Response) => response))
+  }
   getDefaultRole(): any {
      return this.http.get(this.jsonUrl + '/defaultroles.json')
       .pipe(map((response: Response) => response)) 

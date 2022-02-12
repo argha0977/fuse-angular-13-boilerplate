@@ -44,6 +44,19 @@
         </div>
       
     </div>
+     <!-- Actions -->
+     <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+        <button
+        class="ml-4"
+        mat-flat-button
+        [color]="'primary'"
+        (click)="addnew()"
+        >
+        <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+        <span class="ml-2 mr-1">Add</span>
+       </button>
+      
+    </div>
     </div>
     <mat-drawer-container
         class="flex-auto h-full"
@@ -160,6 +173,7 @@
                            <th >Name</th>
                            <th >Country</th>
                            <th >Addedon</th>
+                           <th></th>
                            <!-- <th >Edit</th>
                            <th >Delete</th> -->
                            <!-- <th width="230">Name</th>
@@ -175,6 +189,27 @@
                            <td  style= "cursor:pointer ;">{{list.oname}}</td>
                            <td  style= "cursor:pointer ;">{{list.country}}</td>
                            <td  style= "cursor:pointer ;">{{list.addedon | date: "dd.MM.yyyy"}}</td>
+                           <td>
+                            <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More"
+                            (click)="$event.stopPropagation();">
+                        <mat-icon class="secondary-text">more_vert</mat-icon>
+                    </button>
+    
+                    <mat-menu #moreMenu="matMenu">
+                        <button mat-menu-item aria-label="settings" (click)="setProduct(list)">
+                            <mat-icon>settings</mat-icon>
+                            <span>Features Settings</span>
+                        </button>
+                        <button mat-menu-item aria-label="edit" (click)="vendorEdit(list)">
+                            <mat-icon>edit</mat-icon>
+                            <span>Edit</span>
+                        </button>
+                        <button mat-menu-item aria-label="remove" (click)="deleteVendor(list)">
+                            <mat-icon>delete</mat-icon>
+                            <span>Remove</span>
+                        </button>
+                    </mat-menu>
+                           </td>
                            <!-- (click)="go2Profile(list,rindex)"<td (click)="edtiUSer(rindex,list)" style= "cursor:pointer ;"><mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon></td>
                            <td (click)="deleteUser(rindex,list)" style= "cursor:pointer ;"><mat-icon [svgIcon]="'heroicons_outline:trash'" ></mat-icon></td> -->
                         </tr> 
