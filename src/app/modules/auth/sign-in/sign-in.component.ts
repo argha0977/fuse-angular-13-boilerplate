@@ -186,15 +186,15 @@ export class AuthSignInComponent implements OnInit, OnDestroy
             this._router.navigateByUrl('reset-password');
         }
         else {
-            // if (role.privilege.indexOf('App Dashboard') >= 0){
-            //     //Redirect to App Dashboard
-            //     this.router.navigate(['/pages/appdashboard']);
-            // }
-            // else {
+            if (role.privilege.indexOf('App Dashboard') >= 0){
+                //Redirect to App Dashboard
+                this._router.navigate(['appdashboard']);
+            }
+            else {
                 //Redirect to Dashboard
                  const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
                 this._router.navigateByUrl(redirectURL);
-            // }
+            }
             
         }
     }

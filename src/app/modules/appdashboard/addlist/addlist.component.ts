@@ -28,7 +28,8 @@ export class AddlistComponent  {
   user: any;
   currentUser: any;
   vendorForm: FormGroup;
-  vendors = {oname:'', pin:'', address:'', country:'', state:'', city:'',googleapikey:''};
+  vendors = {oname:'', pin:'', address:'', country:'', state:'', city:'',};
+  //googleapikey:''};
   countries=[];
   states = [];
   profileFlag= false;
@@ -95,7 +96,7 @@ export class AddlistComponent  {
         city: new FormControl(''),
         address: new FormControl(''),
         pin: new FormControl(''),
-        googleapikey: new FormControl(''),
+        // googleapikey: new FormControl(''),
       });
   }  
 
