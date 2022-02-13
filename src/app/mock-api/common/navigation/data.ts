@@ -20,7 +20,10 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 title: 'Project',
                 type: 'basic',
                 icon: 'heroicons_outline:clipboard-check',
-                link: '/dashboards/project'
+                link: '/dashboards/project',
+                privilege: [
+                    "Dashboard"
+                ],
             },
             // {
             //     id: 'dashboards.analytics',
@@ -57,7 +60,10 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 title: 'Appdashboard',
                 type: 'basic',
                 icon: 'heroicons_outline:clipboard-check',
-                link: '/appdashboard'
+                link: '/appdashboard',
+                privilege: [
+                    "App Dashboard",
+                ],
             }
             
         ]
@@ -78,7 +84,8 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 title: 'Users',
                 type: 'basic',
                 icon: 'heroicons_outline:clipboard-check',
-                link: '/users'
+                link: '/users',
+                privilege:  ["View User"],
             }
             
         ]

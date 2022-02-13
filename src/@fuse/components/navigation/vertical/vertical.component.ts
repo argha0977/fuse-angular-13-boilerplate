@@ -336,17 +336,17 @@ export class FuseVerticalNavigationComponent implements OnChanges, OnInit, After
                     this.closeAside();
                 }
             });
-            this.getAllMenuItems();
+            // this.getAllMenuItems();
             if(this.userRole) this.setMenu();
     }
 
-    getAllMenuItems() {
-        this.store.pipe(select('user'))
-        .subscribe(response => {
-            if (response.menuItems.length > 0) this.navigation = JSON.parse(JSON.stringify(response.menuItems));
-            // else this.store.dispatch(new SetAllMenuItems(this.navigation))
-        })
-    }
+    // getAllMenuItems() {
+    //     this.store.pipe(select('user'))
+    //     .subscribe(response => {
+    //         if (response.menuItems.length > 0) this.navigation = JSON.parse(JSON.stringify(response.menuItems));
+    //         // else this.store.dispatch(new SetAllMenuItems(this.navigation))
+    //     })
+    // }
 
     setMenu() {
         let menues = [];

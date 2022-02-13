@@ -102,6 +102,16 @@ export class AuthSignInComponent implements OnInit, OnDestroy
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((response) => {
                 let currentUser = JSON.parse(JSON.stringify(response));
+                console.log(currentUser.features)
+               if(!currentUser.features){
+                this.commonService.getFeatures() 
+                .pipe(takeUntil(this._unsubscribeAll))
+                .subscribe(
+                (data:any)=> { console.log(data);
+                 currentUser.features= JSON.parse(JSON.stringify(data));
+                 
+                })
+                }
                 this.commonService.setItem('currentUser', response);
                 this.store.dispatch(signin({user: response}));
                 this.getDefaultRoles(currentUser);
