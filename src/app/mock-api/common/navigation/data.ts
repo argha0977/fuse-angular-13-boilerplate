@@ -3,6 +3,33 @@ import { FuseNavigationItem } from '@fuse/components/navigation';
 
 export const defaultNavigation: FuseNavigationItem[] = [
     {
+        id: 'appdashboard',
+        title: 'APP DASHBOARD',
+        subtitle: 'Appdashboard',
+        type: 'group',
+        icon: 'heroicons_outline:home',
+        
+        privilege: [
+            "App Dashboard",
+        ],
+        feature: [
+            "Settings"
+        ],
+        children: [
+            {
+                id: 'settings.appdashboard',
+                title: 'Appdashboard',
+                type: 'basic',
+                icon: 'heroicons_outline:clipboard-check',
+                link: '/appdashboard',
+                privilege: [
+                    "App Dashboard",
+                ],
+            }
+            
+        ]
+    },
+    {
         id: 'dashboards',
         title: 'Dashboards',
         subtitle: 'Unique dashboard designs',
@@ -41,33 +68,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
             // }
         ]
     },
-    {
-        id: 'appdashboard',
-        title: 'APP DASHBOARD',
-        subtitle: 'Appdashboard',
-        type: 'group',
-        icon: 'heroicons_outline:home',
-        
-        privilege: [
-            "App Dashboard",
-        ],
-        feature: [
-            "Settings"
-        ],
-        children: [
-            {
-                id: 'settings.appdashboard',
-                title: 'Appdashboard',
-                type: 'basic',
-                icon: 'heroicons_outline:clipboard-check',
-                link: '/appdashboard',
-                privilege: [
-                    "App Dashboard",
-                ],
-            }
-            
-        ]
-    },
+    
     {
         id: 'settings',
         title: 'Settings',
