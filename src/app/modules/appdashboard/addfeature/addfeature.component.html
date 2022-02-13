@@ -18,7 +18,7 @@
      class="flex flex-col flex-auto p-6 sm:p-8 overflow-y-auto" >
      <div *ngFor="let product of productsSearch;let rindex=index">
 
-        <mat-checkbox (ngModelChange)="checkProduct(product.name,rindex)"  [(ngModel)]="product.checkFlag" style="margin-bottom: 12px;"
+        <mat-checkbox (ngModelChange)="checkProduct(product.name,rindex)"  [(ngModel)]="product.checkFlag" style="margin-bottom: 12px; color:#69c3d8; font-weight: 800;"
         >{{product.name}}</mat-checkbox>
      </div>
    
