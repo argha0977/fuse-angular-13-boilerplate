@@ -2,18 +2,6 @@
     {
         "name":"Settings",
         "default": true
-    },
-    {
-        "name": "HR Management",
-        "default": false
-    },
-    {
-        "name": "Attendance Management",
-        "default": false
-    },
-    {
-        "name": "Sales Management",
-        "default": false
     }
     
 ]

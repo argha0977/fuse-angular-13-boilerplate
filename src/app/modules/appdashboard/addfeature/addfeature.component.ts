@@ -57,6 +57,7 @@ export class AddfeatureComponent  {
             if(index!=-1){
               data[i].checkFlag=true;
             }
+            else if (data[i].default) data[i].checkFlag = true;
             else{
              data[i].checkFlag=false;
             }
