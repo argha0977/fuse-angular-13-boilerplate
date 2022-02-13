@@ -16,20 +16,20 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 icon: 'heroicons_outline:clipboard-check',
                 link: '/dashboards/project'
             },
-            {
-                id: 'dashboards.analytics',
-                title: 'Analytics',
-                type: 'basic',
-                icon: 'heroicons_outline:chart-pie',
-                link: '/dashboards/analytics'
-            },
-            {
-                id: 'documentation.guides',
-                title: 'Guides',
-                type: 'basic',
-                icon: 'heroicons_outline:book-open',
-                link: '/docs/guides'
-            }
+            // {
+            //     id: 'dashboards.analytics',
+            //     title: 'Analytics',
+            //     type: 'basic',
+            //     icon: 'heroicons_outline:chart-pie',
+            //     link: '/dashboards/analytics'
+            // },
+            // {
+            //     id: 'documentation.guides',
+            //     title: 'Guides',
+            //     type: 'basic',
+            //     icon: 'heroicons_outline:book-open',
+            //     link: '/docs/guides'
+            // }
         ]
     },
     {
