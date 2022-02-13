@@ -286,7 +286,7 @@ export class AppdashboardComponent implements OnInit ,OnDestroy
       // Build the config form
       this.configForm = this._formBuilder.group({
         title: 'Remove User',
-        message: 'Are you sure you want to remove this user permanently? <span class="font-medium">This action cannot be undone!</span>',
+        message: 'Are you sure you want to remove this organization permanently? <span class="font-medium">This action cannot be undone!</span>',
         icon: this._formBuilder.group({
           show: true,
           name: 'heroicons_outline:exclamation',

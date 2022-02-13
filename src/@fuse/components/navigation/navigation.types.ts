@@ -34,6 +34,8 @@ export interface FuseNavigationItem
         wrapper?: string;
     };
     icon?: string;
+    privilege?: any;
+    feature?: any;
     badge?: {
         title?: string;
         classes?: string;

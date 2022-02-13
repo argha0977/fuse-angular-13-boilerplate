@@ -8,6 +8,12 @@ export const defaultNavigation: FuseNavigationItem[] = [
         subtitle: 'Unique dashboard designs',
         type: 'group',
         icon: 'heroicons_outline:home',
+        privilege: [
+            "Dashboard"
+        ],
+        feature: [
+            "Settings"
+        ],
         children: [
             {
                 id: 'dashboards.project',
@@ -38,6 +44,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         subtitle: 'Appdashboard',
         type: 'group',
         icon: 'heroicons_outline:home',
+        
+        privilege: [
+            "App Dashboard",
+        ],
+        feature: [
+            "Settings"
+        ],
         children: [
             {
                 id: 'settings.appdashboard',
@@ -55,6 +68,10 @@ export const defaultNavigation: FuseNavigationItem[] = [
         subtitle: 'Settings',
         type: 'group',
         icon: 'heroicons_outline:home',
+        privilege: ["View User"],
+        feature: [
+            "Settings"
+        ],
         children: [
             {
                 id: 'settings.users',
