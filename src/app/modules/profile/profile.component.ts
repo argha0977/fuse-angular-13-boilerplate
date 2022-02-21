@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { CommonService } from 'app/services/common.service';
+import { OrganizationService } from 'app/services/organization.service';
 import { UserService } from 'app/services/user.service';
 import { signin, updateUser } from 'app/store/actions/user.actions';
 import { Subject } from 'rxjs';
@@ -30,11 +31,23 @@ export class ProfileComponent implements OnInit {
   aboutEdit = { email: '', mobile: '' };
   currentUser: any;
   userFlag = false;
+  homeFlag=true;
+  organizationFlag=false;
 
+  organizations={address: "", city: "", createdon: "",email: "",expireon: "", features: [],lastupdatedby: "",
+  lastupdatedon: "", logo: "",ocode: "",oname: "", otype: "", country:'',state:'',phone: "",pin: "", status: "",_id: "", imageURL: ''};
+  orgAboutmeFlag = false;
+  orgpostFlag = false;
+  aboutorg='Contact Info';
+  orgaboutEdit = { email: '', phone: '', oname: "", };
+  orgpostEdit = { city: "", address: "", pin: "", country:'',state:'',};
+  countries=[];
+  states = [];
   constructor(private _router: Router,
     private activeRoute: ActivatedRoute,
     private userService: UserService,
     private commonService: CommonService,
+    private organizationService: OrganizationService,
     private store: Store<{ user: any }>
   ) {
     this._unsubscribeAll = new Subject();
@@ -52,7 +65,8 @@ export class ProfileComponent implements OnInit {
       if (params['from'] == 'users') {
         this.userFlag = true;
       }
-
+      this.getShowbyCode();
+      this.getCountries();
     })
   }
 
@@ -117,6 +131,7 @@ export class ProfileComponent implements OnInit {
 
   editAboutMe() {
     this.About = 'Edit Contact';
+    this.postFlag = false;
     this.AboutmeFlag = true;
     this.aboutEdit = JSON.parse(JSON.stringify(this.user));
   }
@@ -152,6 +167,7 @@ export class ProfileComponent implements OnInit {
 
   editPost() {
     this.postFlag = true;
+    this.AboutmeFlag = false;
     this.postEdit = JSON.parse(JSON.stringify(this.user));
   }
 
@@ -211,5 +227,168 @@ export class ProfileComponent implements OnInit {
     }
 
   }
+  home(){
+    this.organizationFlag=false;
+    this.homeFlag=true;
+    this.postFlag = false;
+    this.AboutmeFlag = false;
+    this.orgAboutmeFlag = false;
+    this.orgpostFlag = false;
+  }
+  organization(){
+   this.organizationFlag=true;
+   this.homeFlag=false;
+   this.orgAboutmeFlag = false;
+   this.orgpostFlag = false;
+   this.postFlag = false;
+    this.AboutmeFlag = false;
+  }
+  cancel(){
+    this.postFlag = false;
+    this.AboutmeFlag = false;
+    this.postEdit = { role: '', firstname: '', lastname: '' };
+    this.aboutEdit = { email: '', mobile: '' };
+    this.About = 'Contact Info';
+  }
 
+
+  //organization
+
+  getShowbyCode(){
+    this.organizationService.showByCode(this.currentUser.ocode)
+    .pipe(takeUntil(this._unsubscribeAll))
+    .subscribe(response => {console.log(response);
+    this.organizations=JSON.parse(JSON.stringify(response));
+    this.organizations.imageURL= this.organizationService.orgLogo(this.organizations.logo);
+    },
+      respError => {
+        this.commonService.showSnakBarMessage(respError, 'error', 2000);
+      })
+  }
+  cancelorg(){
+    this.aboutorg='Contact Info';
+     this.orgaboutEdit = { email: '', phone: '',oname:'' };
+    this.orgAboutmeFlag = false;
+    this.orgpostFlag = false;
+    this. orgpostEdit = { city: "", address: "", pin: "", country:'',state:'',};
+
+  }
+  editOrgAboutMe(){
+    this.aboutorg = 'Edit Contact';
+    this.orgAboutmeFlag = true;
+    this.orgpostFlag = false;
+    this.orgaboutEdit = JSON.parse(JSON.stringify(this.organizations));
+  }
+  saveOrgAboutMe(){
+    let obj = JSON.parse(JSON.stringify(this.organizations));
+    obj['email'] = this.orgaboutEdit.email;
+    obj['phone'] = this.orgaboutEdit.phone;
+    obj['userid'] = this.currentUser.userid;
+    obj['oname'] = this.orgaboutEdit.oname;
+    delete obj.imageURL;
+    this.organizationService.update(obj)
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(response => {
+        let organizations = JSON.parse(JSON.stringify(response));
+        this.organizations = JSON.parse(JSON.stringify(organizations));
+        this.organizations.imageURL = this.organizationService.orgLogo(this.organizations.logo);
+        this.aboutorg = 'Contact Info';
+        this.orgAboutmeFlag = false;
+      },
+        respError => {
+          this.commonService.showSnakBarMessage(respError, 'error', 2000);
+        })
+  }
+  editorgPost(){
+    this.aboutorg = 'Contact Info';
+    this.orgAboutmeFlag = false;
+    this.orgpostFlag = true;
+    this.orgpostEdit = JSON.parse(JSON.stringify(this.organizations));
+  }
+  saveorgPost(){
+    let obj = JSON.parse(JSON.stringify(this.organizations));
+    obj['address'] = this.orgpostEdit.address;
+    obj['pin'] = this.orgpostEdit.pin;
+    obj['userid'] = this.currentUser.userid;
+    obj['city'] = this.orgpostEdit.city;
+    obj['country'] = this.orgpostEdit.country;
+    obj['state'] = this.orgpostEdit.state;
+    delete obj.imageURL;
+    this.organizationService.update(obj)
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(response => {
+        let organizations = JSON.parse(JSON.stringify(response));
+        this.organizations = JSON.parse(JSON.stringify(organizations));
+        this.organizations.imageURL = this.organizationService.orgLogo(this.organizations.logo);
+        this.orgpostFlag = false;
+      },
+        respError => {
+          this.commonService.showSnakBarMessage(respError, 'error', 2000);
+        })
+  }
+  getCountries(){
+    // alert('1')
+    console.log('123');
+    this.commonService.getCountries() 
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe(
+        (data:any)=> { console.log(data);
+            this.countries= JSON.parse(JSON.stringify(data));
+            console.log(this.countries);
+            if(this.countries.length > 0) {
+              if(!this.organizations.country){
+              this.orgpostEdit.country='India';
+              }
+
+              this.onSelect();
+            }
+            
+        }
+    )
+  }
+  
+  onSelect(){
+    let index = this.commonService.findItem(this.countries, 'name', this.orgpostEdit.country);
+    if(index >= 0) {
+        if(this.countries[index].states) {
+            this.states = this.countries[index].states;
+        }
+        else this.states = [];
+    }
+    else this.states = [];
+    if(this.states.length > 0) {
+      if(!this.organizations.state){
+        this.orgpostEdit.state = this.countries[index].states[0].name;
+      }
+    }
+    else {
+      if(!this.organizations.state){
+      this.orgpostEdit.state = '';
+      }
+    }
+  }
+  onFileSelect1(files: FileList) {
+    if (files.length > 0) {
+      let fileItem = files.item(0);
+      let formData = new FormData();
+      formData.append('file', fileItem, fileItem.name);
+      for (let key in this.organizations) {
+        if (key != 'imageURL') {
+          formData.append(key, this.organizations[key]);
+        }
+      }
+      this.organizationService.upload(formData)
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe(response => {
+          let organizations = JSON.parse(JSON.stringify(response));
+          this.organizations.logo = organizations.logo;
+          // this.store.dispatch(updateUser({ user: user }));
+          this.organizations.imageURL = this.organizationService.orgLogo(this.organizations.logo);
+         
+        }, respError => {
+          this.commonService.showSnakBarMessage(respError, 'error', 2000);
+        });
+    }
+
+  }
 }

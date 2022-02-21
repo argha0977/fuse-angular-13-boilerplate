@@ -119,6 +119,37 @@ export class OrganizationService {
         catchError(this.errorHandler)
       )
   }
+  showByCode(ocode: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.authorization
+      })
+    };
+    return this.http.get(this.baseUrl + '/organization/showByCode/' + ocode, httpOptions)
+    .pipe(
+      retry(1),
+      catchError(this.errorHandler)
+    )
+  }
+  orgLogo(file: string) {
+    if (!file) {
+      file = 'nouser.png';
+    }
+    return this.baseUrl + '/organization/orgLogo/' + file;
+  }
+  upload(file: FormData) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.authorization
+      })
+    };
+    return this.http.post(this.baseUrl + '/organization/upload', file, httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.errorHandler)
+      )
+  }
   errorHandler(error: Response) {
     console.log(error);
     let message = (error['error']) ? ((error['error'].error) ? error['error'].error : error['message']) : error['message'];
