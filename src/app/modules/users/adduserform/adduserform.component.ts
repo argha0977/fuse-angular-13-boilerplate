@@ -1,3 +1,4 @@
+import { EventListenerFocusTrapInertStrategy } from '@angular/cdk/a11y';
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -30,6 +31,7 @@ export class AdduserformComponent implements OnInit{//
   visible = false;
   addFlag=true;
   editFlag=true;
+  data = { firstname: '',lastname: '', mobile: '', email: '', imageUrl: '',role: '', password: ''};
   //  constructor( ){
 
   //  }
@@ -74,6 +76,14 @@ export class AdduserformComponent implements OnInit{//
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
   }
+  // showicon(){
+  //   if(this.addFlag && !this.editFlag){
+  //    this.visible=!this.visible;
+  //   }
+  //   // else if(!this.addFlag && this.editFlag){
+
+  //   // }
+  // }
   createContactForm(): FormGroup {
     return this._formBuilder.group({
       firstname: [''],
@@ -81,7 +91,7 @@ export class AdduserformComponent implements OnInit{//
       email: ['', Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)],
       mobile: ['', Validators.pattern(/^\d{10}$/)],
       password: [''],
-      role: [''],
+      role: [this.user.role],
     });
   }
   getStoreData(){
@@ -101,8 +111,12 @@ export class AdduserformComponent implements OnInit{//
         this.addFlag=false;
         if(response.data){
           this.user=JSON.parse(JSON.stringify(response.data));
+          this.data=JSON.parse(JSON.stringify(response.data));
+          
+          // this.user.password= response.data.password;
           this.user.imageUrl = this.userService.profilePic(this.user['image']);
         }
+        this.contactForm = this.createContactForm();
       }
       else{
         // this.searchFlag=false;
@@ -126,6 +140,7 @@ export class AdduserformComponent implements OnInit{//
     this.roles = [];
     this.commonService.getDefaultRole()
       .subscribe(response => {
+        this.roles = [];
         let defaultRoles = JSON.parse(JSON.stringify(response));
         if (this.user.role == 'APPUSER') defaultRoles.splice(0, 1);
         else if (this.user.role != 'APPADMIN') defaultRoles.splice(0, 2);
@@ -134,8 +149,19 @@ export class AdduserformComponent implements OnInit{//
         for (let i = 0; i < defaultRoles.length; i++) {
           this.roles.push(defaultRoles[i]);
         }
-        if (this.roles.length > 0 && this.action === 'add') {
-          this.user.role = this.roles[0].name;
+        if (this.roles.length > 0) {
+          if(this.action === 'add'){
+            this.user.role = this.roles[0].name;
+          }
+          else if(this.action === 'edit'){
+            console.log(this.user.role)
+            /* let index= this.commonService.findItem(this.roles,'name', this.data.role);
+            if(index!=-1){
+              this.user.role = this.roles[index].name; 
+            } */
+           
+          }
+        
         }
       })
   }
@@ -202,20 +228,24 @@ export class AdduserformComponent implements OnInit{//
       this.commonService.showSnakBarMessage('Enter a Users Mobile No. ', 'error', 2000);
       return;
     }
+    console.log('update',this.user);
+    console.log('update',this.contactForm.valid);
     if (this.contactForm.valid) {
     let obj = JSON.parse(JSON.stringify(this.user));
     obj.cuserid = this.currentUser.userid;
     let imageUrl = obj.imageUrl;
     delete obj.imageUrl;
+    console.log(obj);
     this.userService.update(obj)
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(response => {
+      .subscribe(response => {  console.log(response);
         if (response) {
+          this.saving = false;
           this.user = JSON.parse(JSON.stringify(response));
           this.user.imageUrl = imageUrl;
           this.store.dispatch(updateUser({ user: this.user }));
           this.cancel();
-          //this.commonService.setItem('currentUser', this.user);
+          // this.commonService.setItem('currentUser', this.user);
         }
       },
         respError => {
