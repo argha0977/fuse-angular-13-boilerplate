@@ -66,11 +66,15 @@ export class AddlistComponent  {
       this.updateFlag = true;
       this.vendors = JSON.parse(JSON.stringify(_data.data));
       console.log(_data.data);
-      this.vendors.state = JSON.parse(JSON.stringify(_data.data.state));
-      this.vendors.country = JSON.parse(JSON.stringify(_data.data.country));
-      if(_data.data.pin){
-        this.vendors.pin = JSON.parse(JSON.stringify(_data.data.pin));
+      if (_data.data) {
+        this.vendors.state = _data.data.state;
+        this.vendors.country = _data.data.country;
+        if (_data.data.pin) {
+          this.vendors.pin = _data.data.pin;
+        }
       }
+      
+      
      
       // this.vendors.googleapikey = JSON.parse(JSON.stringify(_data.data.googleapikey));
     }

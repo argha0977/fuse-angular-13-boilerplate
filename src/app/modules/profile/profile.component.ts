@@ -43,6 +43,7 @@ export class ProfileComponent implements OnInit {
   orgpostEdit = { city: "", address: "", pin: "", country:'',state:'',};
   countries=[];
   states = [];
+  saving = false;
   constructor(private _router: Router,
     private activeRoute: ActivatedRoute,
     private userService: UserService,
@@ -137,6 +138,47 @@ export class ProfileComponent implements OnInit {
   }
 
   saveAboutMe() {
+    this.saving = true;
+    if (!this.aboutEdit.email) {
+      this.saving = false;
+      this.commonService.showSnakBarMessage('Please enter email', 'error', 2000);
+      return;
+    }
+
+    if (!this.aboutEdit.mobile) {
+      this.saving = false;
+      this.commonService.showSnakBarMessage('Please enter mobile number', 'error', 2000);
+      return;
+    }
+
+
+    let splitted = this.aboutEdit.email.trim().split(' ');
+    if(splitted.length > 1) {
+      // this.saving = false;
+      this.commonService.showSnakBarMessage('Please enter email in correct format', 'error', 2000);
+      return;
+    }
+    let epattern = /[A-Za-z0-9._%+-]{1,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})/;
+    if (!epattern.test(this.aboutEdit.email)) {
+      // this.saving = false;
+      this.commonService.showSnakBarMessage('Please enter email  in correct format', 'error', 2000);
+      return;
+    }
+    if (this.aboutEdit.mobile.trim() == '') {
+      // this.saving = false;
+      this.commonService.showSnakBarMessage('Please enter mobile number ', 'error-toast', 2000);
+      return;
+    }
+    let mpattern = /(^\d{10}$)/;
+    if (!mpattern.test(this.aboutEdit.mobile)) {
+      // this.saving = false;
+      this.commonService.showSnakBarMessage('Please enter mobile number in correct format', 'error', 2000);
+      return;
+    }
+
+
+
+
     let obj = JSON.parse(JSON.stringify(this.user));
     obj['email'] = this.aboutEdit.email;
     obj['mobile'] = this.aboutEdit.mobile;
@@ -147,6 +189,7 @@ export class ProfileComponent implements OnInit {
       .subscribe(response => {
         let user = JSON.parse(JSON.stringify(response));
         this.user = JSON.parse(JSON.stringify(response));
+        this.saving = false;
         this.store.dispatch(updateUser({ user: user }));
         if (this.currentUser.userid == this.user.userid) {
           this.currentUser.email = this.aboutEdit.email;
@@ -160,6 +203,7 @@ export class ProfileComponent implements OnInit {
         this.AboutmeFlag = false;
       },
         respError => {
+          this.saving = false;
           this.commonService.showSnakBarMessage(respError, 'error', 2000);
         })
 
@@ -172,6 +216,18 @@ export class ProfileComponent implements OnInit {
   }
 
   savePost() {
+    this.saving = true;
+    if (!this.postEdit.firstname) {
+      this.saving = false;
+      this.commonService.showSnakBarMessage('Please enter first name', 'error', 2000);
+      return;
+    }
+
+    if (!this.postEdit.lastname) {
+      this.saving = false;
+      this.commonService.showSnakBarMessage('Please enter last name', 'error', 2000);
+      return;
+    }
     let obj = JSON.parse(JSON.stringify(this.user));
     obj['role'] = this.postEdit.role;
     obj['firstname'] = this.postEdit.firstname;
@@ -280,6 +336,46 @@ export class ProfileComponent implements OnInit {
     this.orgaboutEdit = JSON.parse(JSON.stringify(this.organizations));
   }
   saveOrgAboutMe(){
+
+    this.saving = true;
+    if (!this.orgaboutEdit.oname) {
+        this.saving = false;
+        this.commonService.showSnakBarMessage('Please enter organization name', 'error', 2000);
+        return;
+      }
+      if (!this.orgaboutEdit.phone) {
+        this.saving = false;
+        this.commonService.showSnakBarMessage('Please enter mobile number', 'error', 2000);
+        return;
+      }
+
+      if (!this.orgaboutEdit.email) {
+        this.saving = false;
+        this.commonService.showSnakBarMessage('Please enter email', 'error', 2000);
+        return;
+      }
+  
+
+    let splitted = this.orgaboutEdit.email.trim().split(' ');
+    if(splitted.length > 1) {
+      this.commonService.showSnakBarMessage('Please enter email in correct format', 'error', 2000);
+      return;
+    }
+    let epattern = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (!epattern.test(this.orgaboutEdit.email)) {
+      this.commonService.showSnakBarMessage('Please enter email  in correct format', 'error', 2000);
+      return;
+    }
+    if (this.orgaboutEdit.phone.trim() == '') {
+      this.commonService.showSnakBarMessage('Please enter mobile number ', 'error', 2000);
+      return;
+    }
+    let mpattern = /(^\d{10}$)/;
+    if (!mpattern.test(this.orgaboutEdit.phone)) {
+      this.commonService.showSnakBarMessage('Please enter mobile number in correct format', 'error', 2000);
+      return;
+    }
+
     let obj = JSON.parse(JSON.stringify(this.organizations));
     obj['email'] = this.orgaboutEdit.email;
     obj['phone'] = this.orgaboutEdit.phone;
@@ -306,6 +402,13 @@ export class ProfileComponent implements OnInit {
     this.orgpostEdit = JSON.parse(JSON.stringify(this.organizations));
   }
   saveorgPost(){
+    this.saving=true
+    let ppattern = /(^\d{6}$)/;
+    if (!ppattern.test(this.orgpostEdit.pin)) {
+      this.saving = false;
+      this.commonService.showSnakBarMessage('Please enter pincode in correct format', 'error', 2000);
+      return;
+    }
     let obj = JSON.parse(JSON.stringify(this.organizations));
     obj['address'] = this.orgpostEdit.address;
     obj['pin'] = this.orgpostEdit.pin;

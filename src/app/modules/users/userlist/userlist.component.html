@@ -27,16 +27,18 @@
        </tr> 
     </table>
    
- </div>
- <div  *ngIf="userList.length==0">
 
-   <!-- <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center"><mat-icon svgIcon="heroicons_solid:users" ></mat-icon> There are no user!</div> -->
+ </div>
+ <app-user-error *ngIf="userList.length == 0"></app-user-error>
+
+ <!-- <div  *ngIf="userList.length==0">
+
    <div class="flex flex-auto flex-col items-center justify-center h-full">
       <mat-icon
           class="icon-size-24"
           [svgIcon]="'iconsmind:administrator'"></mat-icon>
       <div class="mt-4 text-2xl font-semibold tracking-tight text-secondary">There are no user!</div>
   </div>
-</div>
+</div> -->
 
  

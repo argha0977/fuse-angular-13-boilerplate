@@ -1,42 +1,35 @@
 <div class="flex flex-col flex-auto min-w-0">
- <!-- Header -->
- <div class="flex flex-col shadow bg-card">
- <!-- Cover image -->
- <div>
-    <img
-        class="h-40 lg:h-80 object-cover"
-        [src]="coverUrl"
-        alt="Cover image">
-</div>
+    <!-- Header -->
+    <div class="flex flex-col shadow bg-card">
+        <!-- Cover image -->
+        <div>
+            <img class="h-40 lg:h-80 object-cover" [src]="coverUrl" alt="Cover image">
+        </div>
 
-<div class="flex flex-col flex-0 lg:flex-row items-center max-w-5xl w-full mx-auto px-8 lg:h-18 bg-card">
+        <div class="flex flex-col flex-0 lg:flex-row items-center max-w-5xl w-full mx-auto px-8 lg:h-18 bg-card">
 
-    <!-- Avatar -->
-    <div class="-mt-26 lg:-mt-22 rounded-full">
-        <img *ngIf="homeFlag"
-            class="w-32 h-32 rounded-full ring-4 ring-bg-card"
-            [src]="user.imageURL"
-            alt="User avatar">
-        <img *ngIf="organizationFlag"
-            class="w-32 h-32 rounded-full ring-4 ring-bg-card"
-            [src]="organizations.imageURL"
-            alt="User avatar">
-    </div>
+            <!-- Avatar -->
+            <div class="-mt-26 lg:-mt-22 rounded-full">
+                <img *ngIf="homeFlag" class="w-32 h-32 rounded-full ring-4 ring-bg-card" [src]="user.imageURL"
+                    alt="User avatar">
+                <img *ngIf="organizationFlag" class="w-32 h-32 rounded-full ring-4 ring-bg-card"
+                    [src]="organizations.imageURL" alt="User avatar">
+            </div>
 
-    <!-- Details -->
-    <div class="flex flex-col items-center lg:items-start mt-4 lg:mt-0 lg:ml-8">
-        <div class="text-lg font-bold leading-none" *ngIf="homeFlag">{{user.firstname}} {{user.lastname}}</div>
-        <div class="text-lg font-bold leading-none" *ngIf="organizationFlag">{{organizations.oname}}</div>
-        <div class="text-secondary " *ngIf="homeFlag">{{user.status}}</div>
-        <div class="text-secondary " *ngIf="organizationFlag">{{organizations.status}}</div>
-    </div>
+            <!-- Details -->
+            <div class="flex flex-col items-center lg:items-start mt-4 lg:mt-0 lg:ml-8">
+                <div class="text-lg font-bold leading-none" *ngIf="homeFlag">{{user.firstname}} {{user.lastname}}</div>
+                <div class="text-lg font-bold leading-none" *ngIf="organizationFlag">{{organizations.oname}}</div>
+                <div class="text-secondary " *ngIf="homeFlag">{{user.status}}</div>
+                <div class="text-secondary " *ngIf="organizationFlag">{{organizations.status}}</div>
+            </div>
 
-    <!-- Separator -->
-    <div class="hidden lg:flex h-8 mx-8 border-l-2" *ngIf="userFlag"></div>
+            <!-- Separator -->
+            <div class="hidden lg:flex h-8 mx-8 border-l-2" *ngIf="userFlag"></div>
 
-    <!-- Stats -->
-    <div class="flex items-center mt-6 lg:mt-0 space-x-6" *ngIf="userFlag">
-        <!-- <button 
+            <!-- Stats -->
+            <div class="flex items-center mt-6 lg:mt-0 space-x-6" *ngIf="userFlag">
+                <!-- <button 
         class="px-3 hidden mr-1  sm:inline-flex"
         mat-button
         (click)="back2list()">
@@ -45,39 +38,27 @@
             [svgIcon]="'heroicons_solid:view-list'"></mat-icon>
         <span>Back To List</span>
        </button> -->
-        <div class="flex flex-col items-center">
-            <button 
-        class="px-3 mr-1  sm:inline-flex"
-        mat-button
-        (click)="back2list()">
-        <mat-icon 
-            class="icon-size-5 mr-2"
-            [svgIcon]="'heroicons_solid:view-list'"></mat-icon>
-        <span>Back To List</span>
-       </button>
-            <!-- <span class="font-bold">1.2k</span>
+                <div class="flex flex-col items-center">
+                    <button class="px-3 mr-1  sm:inline-flex" mat-button (click)="back2list()">
+                        <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_solid:view-list'"></mat-icon>
+                        <span>Back To List</span>
+                    </button>
+                    <!-- <span class="font-bold">1.2k</span>
             <span class="text-sm font-medium text-secondary">FOLLOWING</span> -->
-        </div>
-    </div>
+                </div>
+            </div>
 
-    <!-- Menu -->
-    <div class="flex items-center mt-8 mb-4 lg:m-0 lg:ml-auto space-x-6">
-        <a
-            [class]="homeFlag?'font-medium': organizationFlag? 'text-secondary' : 'text-secondary'"
-            (click)="home()"
-            style="cursor: pointer;"
-            >
-            Home
-        </a>
-        <a
-        [class]="organizationFlag?'font-medium': homeFlag? 'text-secondary' : 'text-secondary'"
-            
-            (click)="organization()"
-            style="cursor: pointer;"
-            >
-            Organization
-        </a>
-        <!-- <a
+            <!-- Menu -->
+            <div class="flex items-center mt-8 mb-4 lg:m-0 lg:ml-auto space-x-6">
+                <a [class]="homeFlag?'font-medium': organizationFlag? 'text-secondary' : 'text-secondary'"
+                    (click)="home()" style="cursor: pointer;">
+                    Home
+                </a>
+                <a [class]="organizationFlag?'font-medium': homeFlag? 'text-secondary' : 'text-secondary'"
+                    (click)="organization()" style="cursor: pointer;">
+                    Organization
+                </a>
+                <!-- <a
             class="text-secondary"
             [routerLink]="['./']">
             Followers
@@ -87,143 +68,142 @@
             [routerLink]="['./']">
             Gallery
         </a> -->
-    </div>
-
-</div>
-
-</div>
- <!-- Main -->
- <!-- Main -->
- <div class="flex flex-auto justify-center w-full max-w-5xl mx-auto p-6 sm:p-8" *ngIf="homeFlag">
-
-    <!-- Column -->
-    <div class="hidden lg:flex flex-col items-start mr-8">
-
-        <!-- About me -->
-        <fuse-card class="flex flex-col max-w-80 w-full p-8">
-            <div class="flex items-center justify-between">
-            <div class="text-2xl font-semibold leading-tight"> {{About}}</div>
-            <button (click)="cancel()"  *ngIf="AboutmeFlag"
-            mat-icon-button
-            >
-            <mat-icon
-                class="icon-size-5"
-                [svgIcon]="'heroicons_solid:x'"></mat-icon>
-        </button>
             </div>
-            <!-- <div class="mt-4">
+
+        </div>
+
+    </div>
+    <!-- Main -->
+    <!-- Main -->
+    <div class="flex flex-auto justify-center w-full max-w-5xl mx-auto p-6 sm:p-8" *ngIf="homeFlag">
+
+        <!-- Column -->
+        <div class="hidden lg:flex flex-col items-start mr-8">
+
+            <!-- About me -->
+            <fuse-card class="flex flex-col max-w-80 w-full p-8">
+                <div class="flex items-center justify-between">
+                    <div class="text-2xl font-semibold leading-tight"> {{About}}</div>
+                    <button (click)="cancel()" *ngIf="AboutmeFlag" mat-icon-button>
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:x'"></mat-icon>
+                    </button>
+                </div>
+                <!-- <div class="mt-4">
                 I’m a friendly kitchen assistant who suffers from a severe phobia of buttons.
                 <br><br>
                 Brother of Elijah Jay Watkins, who has phobia of buttons and trust issues.
             </div> -->
-            <hr class="w-full border-t my-6">
-            <div class="flex flex-col" *ngIf="!AboutmeFlag">
-                
-                <div class="flex items-center">
-                    <mat-icon
-                        class="icon-size-5 mr-3"
-                        [svgIcon]="'heroicons_solid:phone'"></mat-icon>
-                    <span class="leading-none">{{user.mobile }}</span>
-                </div>
-                <div class="flex items-center mt-4" >
-                    <mat-icon
-                        class="icon-size-5 mr-3"
-                        [svgIcon]="'heroicons_solid:mail'"></mat-icon>
-                    <span class="leading-none">{{user.email}}</span>
-                </div>
-                
-            </div>
+                <hr class="w-full border-t my-6">
+                <div class="flex flex-col" *ngIf="!AboutmeFlag">
 
-            <div class="flex flex-col" *ngIf="AboutmeFlag">
-                <mat-form-field class="flex items-center" >
-                
+                    <div class="flex items-center">
+                        <mat-icon class="icon-size-5 mr-3" [svgIcon]="'heroicons_solid:phone'"></mat-icon>
+                        <span class="leading-none">{{user.mobile }}</span>
+                    </div>
+                    <div class="flex items-center mt-4">
+                        <mat-icon class="icon-size-5 mr-3" [svgIcon]="'heroicons_solid:mail'"></mat-icon>
+                        <span class="leading-none">{{user.email}}</span>
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col" *ngIf="AboutmeFlag">
+                    <!-- <mat-form-field class="flex items-center">
                         <mat-label>Email</mat-label>
                         <mat-icon matSuffix class="secondary-text">email</mat-icon>
-                        <input name="email" [(ngModel)]="aboutEdit.email" matInput  type="email">
-                </mat-form-field>
-               
-                <mat-form-field class="flex items-center mt-4" >
+                        <input name="email" [(ngModel)]="aboutEdit.email" matInput type="email" required>
+                        <mat-error>Email id is required!</mat-error>
+
+                    </mat-form-field>  -->
+
+                    <mat-form-field class="flex items-center">
+                        <mat-label>Email</mat-label>
+                        <mat-icon matSuffix class="secondary-text">email</mat-icon>
+                        <input type="email" name="email" [(ngModel)]="aboutEdit.email" matInput  pattern="[A-Za-z0-9._%+-]{1,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})" required>
+                        <!-- <mat-error>Email id is required!</mat-error> -->
+                    </mat-form-field>
+
+
+                    <!-- <mat-form-field class="flex items-center mt-4" >
                         <mat-label>Mobile number</mat-label>
                         <mat-icon matSuffix class="secondary-text">mobile_friendly</mat-icon>
-                        <input name="mobile" [(ngModel)]="aboutEdit.mobile" matInput required>
+                        <input name="mobile" [(ngModel)]="aboutEdit.mobile" matInput required pattern="(^\d{10}$)">
                         <mat-error>Mobile No is required!</mat-error>
+                    </mat-form-field> -->
+
+                    <mat-form-field class="flex items-center mt-4">
+                        <mat-label>Mobile number </mat-label>
+                        <mat-icon matSuffix class="secondary-text">mobile_friendly</mat-icon>
+                        <input type="tel" matInput #mobile maxlength="10" value=""  required
+                            [(ngModel)]="aboutEdit.mobile" pattern="(^\d{10}$)">
+                        <!-- <mat-error>
+                            Please enter 10 digits phone/mobile no.
+                        </mat-error> -->
                     </mat-form-field>
 
-                
-                
-            </div>
-            
-            <button *ngIf="!AboutmeFlag"
-                class="px-6 mt-8"
-                mat-flat-button
-                [color]="'primary'"
-                (click)="editAboutMe()">
-                Edit Details
-            </button>
-            <button *ngIf="AboutmeFlag"
-                class="px-6 mt-8"
-                mat-flat-button
-                [color]="'primary'"
-                (click)="saveAboutMe()">
-                Save
-            </button>
-        </fuse-card>
-    </div>
 
-    <!-- Column -->
-    <div class="flex flex-col items-start">
 
-        <!-- Create Post -->
-        <fuse-card class="flex flex-col max-w-140 w-full p-6 sm:p-8 pb-6">
-            <div class="flex items-center justify-between">  
-            <div class="text-xl font-semibold" *ngIf="!postFlag">{{user.firstname}}'s Post</div>
-            <div class="text-xl font-semibold" *ngIf="postFlag">Edit Post</div>
-            <button (click)="cancel()"  *ngIf="postFlag"
-            mat-icon-button
-            >
-            <mat-icon
-                class="icon-size-5"
-                [svgIcon]="'heroicons_solid:x'"></mat-icon>
-            </button>
-            </div>
-            <div class="flex flex-col sm:flex-row items-start mt-8">
-                <div class="flex items-center mb-6 sm:mb-0" *ngIf="!postFlag">
-                    <img
-                        class="w-12 min-w-12 h-12 rounded-full mr-4"
-                        [src]="user.imageURL"
-                        alt="Card cover image">
-                    <div class="sm:hidden">Brian Hughes</div>
                 </div>
-                <div class="fuse-mat-textarea fuse-mat-no-subscript w-full" *ngIf="!postFlag">
-                 <div class=" leading-none marginbottom"> Role: {{user.role}}</div>
-                 <div class=" leading-none marginbottom"> Added On: {{user.addedon|date:'dd/MM/yyyy'}}</div> 
-            
-                 <div class=" leading-none"> Lastupdated On: {{user.lastupdatedon|date:'dd/MM/yyyy'}}</div> 
+
+                <button *ngIf="!AboutmeFlag" class="px-6 mt-8" mat-flat-button [color]="'primary'"
+                    (click)="editAboutMe()">
+                    Edit Details
+                </button>
+                <button *ngIf="AboutmeFlag" class="px-6 mt-8" mat-flat-button [color]="'primary'"
+                    (click)="saveAboutMe()">
+                    Save
+                </button>
+            </fuse-card>
+        </div>
+
+        <!-- Column -->
+        <div class="flex flex-col items-start">
+
+            <!-- Create Post -->
+            <fuse-card class="flex flex-col max-w-140 w-full p-6 sm:p-8 pb-6">
+                <div class="flex items-center justify-between">
+                    <div class="text-xl font-semibold" *ngIf="!postFlag">{{user.firstname}}'s Post</div>
+                    <div class="text-xl font-semibold" *ngIf="postFlag">Edit Post</div>
+                    <button (click)="cancel()" *ngIf="postFlag" mat-icon-button>
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:x'"></mat-icon>
+                    </button>
                 </div>
-                <div class="flex flex-col gt-xs:flex-row" *ngIf="postFlag">
-                    <mat-form-field class="flex-auto gt-xs:pr-3">
-                        <mat-label>Role</mat-label>
-                        <mat-select name="role" [(ngModel)]="postEdit.role">
-                            <mat-option *ngFor="let role of roles" [value]="role.name">
-                                {{role.name}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
-                    </mat-form-field>
-                    <mat-form-field class="flex-auto gt-xs:pl-3">
-                        <mat-label>First Name</mat-label>
-                        <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-                        <input name="firstname" [(ngModel)]="postEdit.firstname" matInput required>
-                        <mat-error>First Name is required!</mat-error>
-                    </mat-form-field>
-                    <mat-form-field class="flex-auto gt-xs:pl-3">
-                    <mat-label>Last Name</mat-label>
-                    <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-                    <input name="lastname" [(ngModel)]="postEdit.lastname" matInput required>
-                    <mat-error>Last Name is required!</mat-error>
-                    </mat-form-field>
-                </div>
-                <!-- <mat-form-field class="fuse-mat-textarea fuse-mat-no-subscript w-full" *ngIf="postFlag"> 
+                <div class="flex flex-col sm:flex-row items-start mt-8">
+                    <div class="flex items-center mb-6 sm:mb-0" *ngIf="!postFlag">
+                        <img class="w-12 min-w-12 h-12 rounded-full mr-4" [src]="user.imageURL" alt="Card cover image">
+                        <div class="sm:hidden">Brian Hughes</div>
+                    </div>
+                    <div class="fuse-mat-textarea fuse-mat-no-subscript w-full" *ngIf="!postFlag">
+                        <div class=" leading-none marginbottom"> Role: {{user.role}}</div>
+                        <div class=" leading-none marginbottom"> Added On: {{user.addedon|date:'dd/MM/yyyy'}}</div>
+
+                        <div class=" leading-none"> Lastupdated On: {{user.lastupdatedon|date:'dd/MM/yyyy'}}</div>
+                    </div>
+                    <div class="flex flex-col gt-xs:flex-row" *ngIf="postFlag">
+                        <mat-form-field class="flex-auto gt-xs:pr-3">
+                            <mat-label>Role</mat-label>
+                            <mat-select name="role" [(ngModel)]="postEdit.role">
+                                <mat-option *ngFor="let role of roles" [value]="role.name">
+                                    {{role.name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-icon class="icon-size-5" matSuffix
+                                [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                        </mat-form-field>
+                        <mat-form-field class="flex-auto gt-xs:pl-3">
+                            <mat-label>First Name</mat-label>
+                            <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+                            <input name="firstname" [(ngModel)]="postEdit.firstname" matInput required>
+                            <!-- <mat-error>First Name is required!</mat-error> -->
+                        </mat-form-field>
+                        <mat-form-field class="flex-auto gt-xs:pl-3">
+                            <mat-label>Last Name</mat-label>
+                            <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+                            <input name="lastname" [(ngModel)]="postEdit.lastname" matInput required>
+                            <!-- <mat-error>Last Name is required!</mat-error> -->
+                        </mat-form-field>
+                    </div>
+                    <!-- <mat-form-field class="fuse-mat-textarea fuse-mat-no-subscript w-full" *ngIf="postFlag"> 
                     <mat-label>Role</mat-label>
                                 <mat-select name="role"[(ngModel)]="postEdit.role">
                                     <mat-option *ngFor="let role of roles" [value]="role.name">
@@ -232,7 +212,7 @@
                                 </mat-select>
                                 <mat-icon matSuffix class="secondary-text">person_outline</mat-icon>
                 </mat-form-field> -->
-                <!-- <mat-form-field class="fuse-mat-textarea fuse-mat-no-subscript w-full" *ngIf="postFlag">
+                    <!-- <mat-form-field class="fuse-mat-textarea fuse-mat-no-subscript w-full" *ngIf="postFlag">
                     <mat-label>First Name</mat-label>
                     <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
                     <input name="firstname"  [(ngModel)]="postEdit.firstname" matInput required>
@@ -246,49 +226,36 @@
                     <input name="lastname" [(ngModel)]="postEdit.lastname" matInput required>
                     <mat-error>Last Name is required!</mat-error>
                 </mat-form-field> -->
-                <!-- <mat-form-field class="fuse-mat-textarea fuse-mat-no-subscript w-full">
+                    <!-- <mat-form-field class="fuse-mat-textarea fuse-mat-no-subscript w-full">
                     <textarea
                         matInput
                         
                         [rows]="3"
                         matTextareaAutosize readonly> {{user.role}}</textarea>
                 </mat-form-field> -->
-            </div>
-          
-            <div class="flex items-center mt-6 sm:mt-8 -mx-3">
-                <div>
-                <button 
-                    class="px-3 mr-1"
-                    mat-button
-                    for="select">
-                    <label for="select">
-                        <mat-icon
-                        class="icon-size-5 mr-2"
-                        [svgIcon]="'heroicons_solid:photograph'"></mat-icon>
-                    <span>{{(!user.image) ? 'Upload Photo' : 'Change Photo'}}</span>
-                    </label>
-                </button>
-                <input type="file" id="select" style="display: none;" (change)="onFileSelect($event.target.files)">
-            </div>
-                <button *ngIf="!postFlag"
-                    class="px-3 mr-1 hidden sm:inline-flex"
-                    mat-button
-                    (click)="editPost()">
-                    <mat-icon
-                        class="icon-size-5 mr-2"
-                        [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
-                    <span>Edit Post</span>
-                </button>
-                <button *ngIf="postFlag"
-                class="px-3 mr-1 hidden sm:inline-flex"
-                mat-button
-                (click)="savePost()">
-                <mat-icon
-                    class="icon-size-5 mr-2"
-                    [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
-                <span>save</span>
-            </button>
-                <!-- <button
+                </div>
+
+                <div class="flex items-center mt-6 sm:mt-8 -mx-3">
+                    <div>
+                        <button class="px-3 mr-1" mat-button for="select">
+                            <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_solid:photograph'"></mat-icon>
+
+                            <label for="select">
+                                <span>{{(!user.image) ? 'Upload Photo' : 'Change Photo'}}</span>
+                            </label>
+                        </button>
+                        <input type="file" id="select" style="display: none;" [multiple]="false" [accept]="'image/jpeg, image/jpg, image/png'"
+                            (change)="onFileSelect($event.target.files)">
+                    </div>
+                    <button *ngIf="!postFlag" class="px-3 mr-1 hidden sm:inline-flex" mat-button (click)="editPost()">
+                        <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                        <span>Edit Post</span>
+                    </button>
+                    <button *ngIf="postFlag" class="px-3 mr-1 hidden sm:inline-flex" mat-button (click)="savePost()">
+                        <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                        <span>save</span>
+                    </button>
+                    <!-- <button
                     class="px-3 mr-1 hidden sm:inline-flex"
                     mat-button
                     [routerLink]="['./']">
@@ -353,162 +320,164 @@
                         </span>
                     </button>
                 </mat-menu> -->
-            </div>
-        </fuse-card>
+                </div>
+            </fuse-card>
+
+        </div>
 
     </div>
 
-</div>
 
+    <!-- Main -->
+    <div class="flex flex-auto justify-center w-full max-w-5xl mx-auto p-6 sm:p-8" *ngIf="organizationFlag">
 
- <!-- Main -->
- <div class="flex flex-auto justify-center w-full max-w-5xl mx-auto p-6 sm:p-8" *ngIf="organizationFlag">
+        <!-- Column -->
+        <div class="hidden lg:flex flex-col items-start mr-8">
 
-    <!-- Column -->
-    <div class="hidden lg:flex flex-col items-start mr-8">
-
-        <!-- About me -->
-        <fuse-card class="flex flex-col max-w-80 w-full p-8">
-            <div class="flex items-center justify-between">
-            <div class="text-2xl font-semibold leading-tight"> {{aboutorg}}</div>
-            <button (click)="cancelorg()"  *ngIf="orgAboutmeFlag"
-            mat-icon-button
-            >
-            <mat-icon
-                class="icon-size-5"
-                [svgIcon]="'heroicons_solid:x'"></mat-icon>
-        </button>
-            </div>
-            <!-- <div class="mt-4">
+            <!-- About me -->
+            <fuse-card class="flex flex-col max-w-80 w-full p-8">
+                <div class="flex items-center justify-between">
+                    <div class="text-2xl font-semibold leading-tight"> {{aboutorg}}</div>
+                    <button (click)="cancelorg()" *ngIf="orgAboutmeFlag" mat-icon-button>
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:x'"></mat-icon>
+                    </button>
+                </div>
+                <!-- <div class="mt-4">
                 I’m a friendly kitchen assistant who suffers from a severe phobia of buttons.
                 <br><br>
                 Brother of Elijah Jay Watkins, who has phobia of buttons and trust issues.
             </div> -->
-            <hr class="w-full border-t my-6">
-            <div class="flex flex-col" *ngIf="!orgAboutmeFlag">
-                
-                <div class="flex items-center">
-                    <mat-icon
-                        class="icon-size-5 mr-3"
-                        [svgIcon]="'heroicons_solid:phone'"></mat-icon>
-                    <span class="leading-none">{{organizations.phone}}</span>
-                </div>
-                <div class="flex items-center mt-4" >
-                    <mat-icon
-                        class="icon-size-5 mr-3"
-                        [svgIcon]="'heroicons_solid:mail'"></mat-icon>
-                    <span class="leading-none">{{organizations.email}}</span>
-                </div>
-                
-            </div>
+                <hr class="w-full border-t my-6">
+                <div class="flex flex-col" *ngIf="!orgAboutmeFlag">
 
-            <div class="flex flex-col" *ngIf="orgAboutmeFlag">
-                <mat-form-field class="flex items-center" >
-                    <mat-label>Organization Name</mat-label>
-                    <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-                    <input name="oname" [(ngModel)]="orgaboutEdit.oname" matInput required>
-                    <mat-error>Organization Name is required!</mat-error>
-                </mat-form-field>
-               
-                <mat-form-field class="flex items-center mt-4" >
+                    <div class="flex items-center">
+                        <mat-icon class="icon-size-5 mr-3" [svgIcon]="'heroicons_solid:phone'"></mat-icon>
+                        <span class="leading-none">{{organizations.phone}}</span>
+                    </div>
+                    <div class="flex items-center mt-4">
+                        <mat-icon class="icon-size-5 mr-3" [svgIcon]="'heroicons_solid:mail'"></mat-icon>
+                        <span class="leading-none">{{organizations.email}}</span>
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col" *ngIf="orgAboutmeFlag">
+                    <mat-form-field class="flex items-center">
+                        <mat-label>Organization Name</mat-label>
+                        <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+                        <input name="oname" [(ngModel)]="orgaboutEdit.oname" matInput required>
+                        <!-- <mat-error>Organization Name is required!</mat-error> -->
+                    </mat-form-field>
+
+                    <!-- <mat-form-field class="flex items-center mt-4">
                         <mat-label>Mobile number</mat-label>
                         <mat-icon matSuffix class="secondary-text">mobile_friendly</mat-icon>
                         <input name="mobile" [(ngModel)]="orgaboutEdit.phone" matInput required>
                         <mat-error>Mobile No is required!</mat-error>
+                    </mat-form-field> -->
+
+                    <mat-form-field class="flex items-center mt-4">
+                        <mat-label>Mobile number </mat-label>
+                        <mat-icon matSuffix class="secondary-text">mobile_friendly</mat-icon>
+                        <input type="tel" matInput #phone maxlength="10" value=""  required
+                            [(ngModel)]="orgaboutEdit.phone" pattern="(^\d{10}$)">
+                        <!-- <mat-error>
+                            Please enter 10 digits phone/mobile no.
+                        </mat-error> -->
                     </mat-form-field>
-                    <mat-form-field class="flex items-center mt-4" >
+
+                    <!-- <mat-form-field class="flex items-center mt-4">
                         <mat-label>Email</mat-label>
                         <mat-icon matSuffix class="secondary-text">email</mat-icon>
-                        <input name="email" [(ngModel)]="orgaboutEdit.email" matInput  type="email">
-                    </mat-form-field>
-                
-                
-            </div>
-            
-            <button *ngIf="!orgAboutmeFlag"
-                class="px-6 mt-8"
-                mat-flat-button
-                [color]="'primary'"
-                (click)="editOrgAboutMe()">
-                Edit Details
-            </button>
-            <button *ngIf="orgAboutmeFlag"
-                class="px-6 mt-8"
-                mat-flat-button
-                [color]="'primary'"
-                (click)="saveOrgAboutMe()">
-                Save
-            </button>
-        </fuse-card>
-    </div>
+                        <input name="email" [(ngModel)]="orgaboutEdit.email" matInput type="email">
+                    </mat-form-field> -->
 
-    <!-- Column -->
-    <div class="flex flex-col items-start">
+                    <mat-form-field class="flex items-center mt-4">
+                        <mat-label>Email</mat-label>
+                        <mat-icon matSuffix class="secondary-text">email</mat-icon>
+                        <input type="email" name="email" [(ngModel)]="orgaboutEdit.email" matInput  pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required>
+                        <!-- <mat-error>Email id is required!</mat-error> -->
+                    </mat-form-field>
 
-        <!-- Create Post -->
-        <fuse-card class="flex flex-col max-w-140 w-full p-6 sm:p-8 pb-6">
-            <div class="flex items-center justify-between">  
-            <div class="text-xl font-semibold" *ngIf="!orgpostFlag">{{organizations.oname}}'s Address</div>
-            <div class="text-xl font-semibold" *ngIf="orgpostFlag">Edit Address</div>
-            <button (click)="cancelorg()"  *ngIf="orgpostFlag"
-            mat-icon-button
-            >
-            <mat-icon
-                class="icon-size-5"
-                [svgIcon]="'heroicons_solid:x'"></mat-icon>
-            </button>
-            </div>
-            <div class="flex flex-col sm:flex-row items-start mt-8">
-                <div class="flex items-center mb-6 sm:mb-0" *ngIf="!orgpostFlag">
-                    <img
-                        class="w-12 min-w-12 h-12 rounded-full mr-4"
-                        [src]="organizations.imageURL"
-                        alt="Card cover image">
-                    <div class="sm:hidden">Brian Hughes</div>
+
+
                 </div>
-                <div class="fuse-mat-textarea fuse-mat-no-subscript w-full" *ngIf="!orgpostFlag">
-                 <div class=" leading-none marginbottom"> Address: {{organizations.address}}</div>
-                 <div class=" leading-none marginbottom"> City: {{organizations.city}}-{{organizations.pin}}</div> 
-            
-                 <div class=" leading-none"> State: {{organizations.state}},Country: {{organizations.country}}, </div> 
+
+                <button *ngIf="!orgAboutmeFlag" class="px-6 mt-8" mat-flat-button [color]="'primary'"
+                    (click)="editOrgAboutMe()">
+                    Edit Details
+                </button>
+                <button *ngIf="orgAboutmeFlag" class="px-6 mt-8" mat-flat-button [color]="'primary'"
+                    (click)="saveOrgAboutMe()">
+                    Save
+                </button>
+            </fuse-card>
+        </div>
+
+        <!-- Column -->
+        <div class="flex flex-col items-start">
+
+            <!-- Create Post -->
+            <fuse-card class="flex flex-col max-w-140 w-full p-6 sm:p-8 pb-6">
+                <div class="flex items-center justify-between">
+                    <div class="text-xl font-semibold" *ngIf="!orgpostFlag">{{organizations.oname}}'s Address</div>
+                    <div class="text-xl font-semibold" *ngIf="orgpostFlag">Edit Address</div>
+                    <button (click)="cancelorg()" *ngIf="orgpostFlag" mat-icon-button>
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:x'"></mat-icon>
+                    </button>
                 </div>
-                <div class="flex flex-col gt-xs:flex-row" *ngIf="orgpostFlag">
-                    <mat-form-field class="fuse-mat-textarea fuse-mat-no-subscript w-full">
-                        <textarea
-                            matInput
-                            [rows]="3"
-                            matTextareaAutosize [(ngModel)]="orgpostEdit.address"></textarea>
-                    </mat-form-field> 
-                    <mat-form-field class="flex-auto gt-xs:pr-3">
-                        <mat-label>Country</mat-label>
-                        <mat-select name="country" [(ngModel)]="orgpostEdit.country"  (ngModelChange)="onSelect()" >
-                            <mat-option *ngFor="let country of countries" [value]="country.name">
-                                {{country.name}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
-                    </mat-form-field>
-                    <mat-form-field class="flex-auto gt-xs:pr-3">
-                        <mat-label>State</mat-label>
-                        <mat-select name="state" [(ngModel)]="orgpostEdit.state">
-                            <mat-option *ngFor="let state of states" [value]="state.name">{{state.name}}</mat-option>
-                        </mat-select>
-                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
-                    </mat-form-field>
-                    <mat-form-field class="flex-auto gt-xs:pl-3">
-                        <mat-label>City</mat-label>
-                        <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-                        <input name="city" [(ngModel)]="orgpostEdit.city" matInput >
-                        <!-- <mat-error>First Name is required!</mat-error> -->
-                    </mat-form-field>
-                    <mat-form-field class="flex-auto gt-xs:pl-3">
-                    <mat-label>Pin No</mat-label>
-                    <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-                    <input name="pin" [(ngModel)]="orgpostEdit.pin" matInput >
-                    <!-- <mat-error>Last Name is required!</mat-error> -->
-                    </mat-form-field>
-                </div>
-                <!-- <mat-form-field class="fuse-mat-textarea fuse-mat-no-subscript w-full" *ngIf="postFlag"> 
+                <div class="flex flex-col sm:flex-row items-start mt-8">
+                    <div class="flex items-center mb-6 sm:mb-0" *ngIf="!orgpostFlag">
+                        <img class="w-12 min-w-12 h-12 rounded-full mr-4" [src]="organizations.imageURL"
+                            alt="Card cover image">
+                        <div class="sm:hidden">Brian Hughes</div>
+                    </div>
+                    <div class="fuse-mat-textarea fuse-mat-no-subscript w-full" *ngIf="!orgpostFlag">
+                        <div class=" leading-none marginbottom"> Address: {{organizations.address}}</div>
+                        <div class=" leading-none marginbottom"> City: {{organizations.city}}-{{organizations.pin}}
+                        </div>
+
+                        <div class=" leading-none"> State: {{organizations.state}},Country: {{organizations.country}},
+                        </div>
+                    </div>
+                    <div class="flex flex-col gt-xs:flex-row" *ngIf="orgpostFlag">
+                        <mat-form-field class=" fuse-mat-no-subscript w-full">
+                            <textarea matInput [rows]="3" 
+                                [(ngModel)]="orgpostEdit.address"></textarea>
+                        </mat-form-field>
+                        <mat-form-field class="flex-auto gt-xs:pr-3">
+                            <mat-label>Country</mat-label>
+                            <mat-select name="country" [(ngModel)]="orgpostEdit.country" (ngModelChange)="onSelect()">
+                                <mat-option *ngFor="let country of countries" [value]="country.name">
+                                    {{country.name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-icon class="icon-size-5" matSuffix
+                                [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                        </mat-form-field>
+                        <mat-form-field class="flex-auto gt-xs:pr-3">
+                            <mat-label>State</mat-label>
+                            <mat-select name="state" [(ngModel)]="orgpostEdit.state">
+                                <mat-option *ngFor="let state of states"
+                                    [value]="state.name">{{state.name}}</mat-option>
+                            </mat-select>
+                            <mat-icon class="icon-size-5" matSuffix
+                                [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                        </mat-form-field>
+                        <mat-form-field class="flex-auto gt-xs:pl-3">
+                            <mat-label>City</mat-label>
+                            <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+                            <input name="city" [(ngModel)]="orgpostEdit.city" matInput>
+                            <!-- <mat-error>First Name is required!</mat-error> -->
+                        </mat-form-field>
+                        <mat-form-field class="flex-auto gt-xs:pl-3">
+                            <mat-label>Pincode</mat-label>
+                            <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+                            <input  name="pin" [(ngModel)]="orgpostEdit.pin"   maxlength="6" pattern="(^\d{6}$)" matInput>
+                            <!-- <mat-error>Last Name is required!</mat-error> -->
+                        </mat-form-field>
+                    </div>
+                    <!-- <mat-form-field class="fuse-mat-textarea fuse-mat-no-subscript w-full" *ngIf="postFlag"> 
                     <mat-label>Role</mat-label>
                                 <mat-select name="role"[(ngModel)]="postEdit.role">
                                     <mat-option *ngFor="let role of roles" [value]="role.name">
@@ -517,7 +486,7 @@
                                 </mat-select>
                                 <mat-icon matSuffix class="secondary-text">person_outline</mat-icon>
                 </mat-form-field> -->
-                <!-- <mat-form-field class="fuse-mat-textarea fuse-mat-no-subscript w-full" *ngIf="postFlag">
+                    <!-- <mat-form-field class="fuse-mat-textarea fuse-mat-no-subscript w-full" *ngIf="postFlag">
                     <mat-label>First Name</mat-label>
                     <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
                     <input name="firstname"  [(ngModel)]="postEdit.firstname" matInput required>
@@ -531,49 +500,38 @@
                     <input name="lastname" [(ngModel)]="postEdit.lastname" matInput required>
                     <mat-error>Last Name is required!</mat-error>
                 </mat-form-field> -->
-                <!-- <mat-form-field class="fuse-mat-textarea fuse-mat-no-subscript w-full">
+                    <!-- <mat-form-field class="fuse-mat-textarea fuse-mat-no-subscript w-full">
                     <textarea
                         matInput
                         
                         [rows]="3"
                         matTextareaAutosize readonly> {{user.role}}</textarea>
                 </mat-form-field> -->
-            </div>
-          
-            <div class="flex items-center mt-6 sm:mt-8 -mx-3">
-                <div>
-                <button 
-                    class="px-3 mr-1"
-                    mat-button
-                    for="select1">
-                    <label for="select1">
-                        <mat-icon
-                        class="icon-size-5 mr-2"
-                        [svgIcon]="'heroicons_solid:photograph'"></mat-icon>
-                    <span>{{(!organizations.logo) ? 'Upload Photo' : 'Change Photo'}}</span>
-                    </label>
-                </button>
-                <input type="file" id="select1" style="display: none;" (change)="onFileSelect1($event.target.files)">
-            </div>
-                <button *ngIf="!orgpostFlag"
-                    class="px-3 mr-1 hidden sm:inline-flex"
-                    mat-button
-                    (click)="editorgPost()">
-                    <mat-icon
-                        class="icon-size-5 mr-2"
-                        [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
-                    <span>Edit Address</span>
-                </button>
-                <button *ngIf="orgpostFlag"
-                class="px-3 mr-1 hidden sm:inline-flex"
-                mat-button
-                (click)="saveorgPost()">
-                <mat-icon
-                    class="icon-size-5 mr-2"
-                    [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
-                <span>save</span>
-            </button>
-                <!-- <button
+                </div>
+
+                <div class="flex items-center mt-6 sm:mt-8 -mx-3">
+                    <div>
+                        <button class="px-3 mr-1" mat-button for="select1">
+                            <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_solid:photograph'"></mat-icon>
+
+                            <label for="select1">
+                                <span>{{(!organizations.logo) ? 'Upload Photo' : 'Change Photo'}}</span>
+                            </label>
+                        </button>
+                        <input type="file" id="select1" style="display: none;" [multiple]="false" [accept]="'image/jpeg, image/jpg, image/png'"
+                            (change)="onFileSelect1($event.target.files)"> 
+                    </div>
+                    <button *ngIf="!orgpostFlag" class="px-3 mr-1 hidden sm:inline-flex" mat-button
+                        (click)="editorgPost()">
+                        <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                        <span>Edit Address</span>
+                    </button>
+                    <button *ngIf="orgpostFlag" class="px-3 mr-1 hidden sm:inline-flex" mat-button
+                        (click)="saveorgPost()">
+                        <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                        <span>save</span>
+                    </button>
+                    <!-- <button
                     class="px-3 mr-1 hidden sm:inline-flex"
                     mat-button
                     [routerLink]="['./']">
@@ -638,10 +596,10 @@
                         </span>
                     </button>
                 </mat-menu> -->
-            </div>
-        </fuse-card>
+                </div>
+            </fuse-card>
+
+        </div>
 
     </div>
-
-</div>
 </div>

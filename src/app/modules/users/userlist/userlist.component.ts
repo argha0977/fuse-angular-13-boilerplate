@@ -12,7 +12,7 @@ import { UserService } from 'app/services/user.service';
 import { deleteUser, setListUserData, signin } from 'app/store/actions/user.actions';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { AdduserformComponent } from '../adduserform/adduserform.component';
+// import { AdduserformComponent } from '../adduserform/adduserform.component';
 
 @Component({
   selector: 'app-userlist',
@@ -54,6 +54,7 @@ export class UserlistComponent implements OnInit {
   ngOnInit(): void {
     this.getUserFromStore();
     this.configureDeleteConfirmation();
+    // this.getTable();
   }
 
   ngOnDestroy(): void {
@@ -68,8 +69,13 @@ export class UserlistComponent implements OnInit {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(response => {
 
+        console.log(response.user);
+        console.log(response.users);
+
         if (response.user) {
           this.user = JSON.parse(JSON.stringify(response.user));
+          console.log(this.user);
+          
           this.user.imageUrl = this.userService.profilePic(this.user.image);
         }
         else {
@@ -113,6 +119,20 @@ export class UserlistComponent implements OnInit {
   //     });
 
   // }
+
+
+  // getTable() {
+  //   this.userService.userfilter
+  //     .subscribe(res => {
+  //       console.log(res);
+  //       if (res) {
+  //         this.userList=res;
+         
+  //       }
+  //     })
+      
+  // }
+
   edtiUSer(index: number, data: any){
     this.store.dispatch(setListUserData({data: data}));
     this.updateParent.emit(false);

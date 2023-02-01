@@ -5,7 +5,7 @@
         
             <ng-container>
                 <div class="flex items-center justify-center">
-                    <mat-icon [svgIcon]="'heroicons_solid:newspaper'"></mat-icon>
+                    <mat-icon [svgIcon]="'heroicons_solid:user'"></mat-icon>
                     <span class="ml-2 font-semibold">Add User</span>
                 </div>
             </ng-container>
@@ -15,11 +15,14 @@
         
             <ng-container>
                 <div class="flex items-center justify-center">
-                    <mat-icon [svgIcon]="'heroicons_solid:newspaper'"></mat-icon>
+                    <mat-icon [svgIcon]="'heroicons_solid:user'"></mat-icon>
                     <span class="ml-2 font-semibold">Edit User</span>
                 </div>
             </ng-container>
         
+        </button>
+        <button mat-icon-button [matTooltip]="'Close'" (click)="close()" >
+            <mat-icon [svgIcon]="'heroicons_outline:x'"></mat-icon>
         </button>
     </div>
     <mat-divider class="mt-6 mb-8"></mat-divider>
@@ -31,35 +34,46 @@
         <mat-label>First Name</mat-label>
         <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
         <input name="firstname" formControlName="firstname"  [(ngModel)]="user.firstname" matInput required>
-        <mat-error>First Name is required!</mat-error>
+        <!-- <mat-error>First Name is required!</mat-error> -->
     </mat-form-field>
     <mat-form-field class="flex-auto gt-xs:pr-3 w-full">
         <mat-label>Last Name</mat-label>
         <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
         <input name="lastname" formControlName="lastname"  [(ngModel)]="user.lastname" matInput required>
-        <mat-error>Last Name is required!</mat-error>
+        <!-- <mat-error>Last Name is required!</mat-error> -->
     </mat-form-field>
-    <mat-form-field class="flex-auto gt-xs:pr-3 w-full">
+
+    <!-- <mat-form-field class="flex-auto gt-xs:pr-3 w-full">
         <mat-label>Mobile number</mat-label>
         <mat-icon matSuffix class="secondary-text">mobile_friendly</mat-icon>
         <input name="mobile" formControlName="mobile"  [(ngModel)]="user.mobile" matInput required pattern="(^\d{10}$)">
-        <!-- <mat-error *ngIf="!mobile.errors?.pattern">Mobile No is required!</mat-error> -->
+        <mat-error *ngIf="!mobile.errors?.pattern">Mobile No is required!</mat-error>
         <mat-error>Mobile No is not incorrect format!</mat-error>
-    </mat-form-field>
+    </mat-form-field> -->
+
+    <mat-form-field class="flex-auto gt-xs:pr-3 w-full">
+        <mat-label>Mobile number </mat-label>
+        <mat-icon matSuffix class="secondary-text">mobile_friendly</mat-icon>
+        <input type="tel" matInput #mobile maxlength="10" value="" formControlName="mobile"  required [(ngModel)]="user.mobile" pattern="(^\d{10}$)">
+       <!-- <mat-error >
+         Please enter 10 digits mobile no.
+       </mat-error> -->
+      </mat-form-field>
     <!--  -->
+
     <mat-form-field   class="flex-auto gt-xs:pr-3 w-full">
         <mat-label>Password</mat-label>
         <mat-icon matSuffix class="secondary-text" *ngIf="addFlag" (click)= "visible=!visible">{{!visible ? 'visibility' : 'visibility_off'}}</mat-icon>
         <mat-icon matSuffix class="secondary-text" *ngIf="editFlag" >visibility_off</mat-icon>
         <input [type]="!visible ? 'password' : 'text'" formControlName="password" [readonly]="editFlag"  [(ngModel)]="user.password" matInput  required>
-        <mat-error >Password is required!</mat-error>
+        <!-- <mat-error >Password is required!</mat-error> -->
         
     </mat-form-field>
     <mat-form-field class="flex-auto gt-xs:pr-3 w-full">
         <mat-label>Email</mat-label>
         <mat-icon matSuffix class="secondary-text">email</mat-icon>
-        <input name="email" [(ngModel)]="user.email" matInput formControlName="email"  type="email" pattern="[A-Za-z0-9._%+-]{1,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})">
-        <mat-error>Email is not incorrect format!</mat-error>
+        <input type="email" name="email"  [(ngModel)]="user.email" matInput formControlName="email"  type="email" pattern="[A-Za-z0-9._%+-]{1,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})" required>
+        <!-- <mat-error>Email is not correct format!</mat-error> -->
     </mat-form-field>
     <mat-form-field class="flex-auto gt-xs:pr-3 w-full"> 
         <mat-label>Role</mat-label>

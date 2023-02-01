@@ -8,15 +8,19 @@ import { usersRoutes } from './users.routing';
 import { UsersidebarComponent } from './usersidebar/usersidebar.component';
 import { UserlistComponent } from './userlist/userlist.component';
 import { AdduserformComponent } from './adduserform/adduserform.component';
+import { UserErrorComponent } from './user-error/user-error.component';
+// import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
     UsersComponent,
     UsersidebarComponent,
     UserlistComponent,
-    AdduserformComponent
+    AdduserformComponent,
+    UserErrorComponent
   ],
   imports: [
+    // CommonModule,
     RouterModule.forChild(usersRoutes),
     FuseCardModule,
     FuseAlertModule,
@@ -24,3 +28,4 @@ import { AdduserformComponent } from './adduserform/adduserform.component';
   ]
 })
 export class UsersModule { }
+

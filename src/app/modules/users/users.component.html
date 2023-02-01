@@ -1,7 +1,8 @@
-<div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden" >
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
 
     <!-- Header -->
-    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+    <div
+        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b page-head dark:bg-transparent">
         <div class="flex-1 min-w-0">
             <!-- Breadcrumbs -->
             <div>
@@ -39,54 +40,51 @@
                     User List
                 </h2>
                 <!-- <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4"> -->
-                   
+
                 <!-- </div> -->
-               
+
             </div>
-          
+
         </div>
         <!-- Actions -->
         <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
-            <button
-            class="ml-4"
-            mat-flat-button
-            [color]="'primary'"
-            (click)="addnew()"
-            >
-            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-            <span class="ml-2 mr-1">Add</span>
-           </button>
-            <button
-                mat-icon-button (click)="search()">
-                <mat-icon [svgIcon]="'heroicons_outline:search'"></mat-icon>
+            <button class="ml-4" mat-flat-button [color]="'black'" (click)="addnew()">
+                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                <span class="ml-2 mr-1">Add</span>
+            </button>
+            <button mat-icon-button (click)="search()">
+                <mat-icon [svgIcon]="'heroicons_outline:search'"
+                    class="font-extrabold c-white cursor-pointer"></mat-icon>
             </button>
         </div>
     </div>
 
     <mat-drawer-container class="flex-auto h-full">
 
-       <!-- Drawer  class="w-60 dark:bg-gray-900" -->
-       <mat-drawer
-       class=" md:w-160 dark:bg-gray-900"
-       [autoFocus]="false"
-       [mode]="drawerMode"
-       [opened]="drawerOpened"
-       [position]="'end'"
-       #matDrawer>
-       <!-- Demo sidebar -->
+        <!-- Drawer  class="w-60 dark:bg-gray-900" -->
+        <mat-drawer class=" md:w-160 dark:bg-gray-900" [autoFocus]="false" [mode]="drawerMode" [opened]="drawerOpened"
+            [position]="'end'" #matDrawer>
+            <!-- Demo sidebar -->
             <app-usersidebar (updateParent1)="bck2parentSide($event)"></app-usersidebar>
         </mat-drawer>
-      
+
 
         <!-- Drawer content -->
         <mat-drawer-content class="flex flex-col">
-    
+
             <!-- Main -->
             <div class="flex-auto p-6 sm:p-10">
 
                 <!-- CONTENT GOES HERE -->
                 <!-- <div class="h-400 min-h-400 max-h-400 border-2 border-dashed border-gray-300 rounded-2xl"> -->
-                    <app-userlist (updateParent)="bck2parent($event)"></app-userlist>
+                <app-userlist (updateParent)="bck2parent($event)" *ngIf="!loading"></app-userlist>
+                <div fxLayout="row" fxLayoutAlign="center " *ngIf="loading">
+                    <div fxLayout="column" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}"
+                        style="height: 273px; margin-left: 45%; ">
+
+                        <mat-spinner></mat-spinner>
+                    </div>
+                </div>
                 <!-- </div> -->
 
             </div>
@@ -97,4 +95,3 @@
 
 
 </div>
-
